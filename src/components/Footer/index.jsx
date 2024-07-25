@@ -6,8 +6,7 @@ export default function Footer({ ...props }) {
             as="footer"
             bg="green.a700"
             justifyContent="center" alignItems="start" px={{
-                base: "20px", sm:
-                    "30px"
+                base: "20px", sm:"30px"
             }}
             py={{
                 md: "68px",
@@ -31,9 +30,9 @@ export default function Footer({ ...props }) {
                     flex={1}
                     justifyContent="space-between"
 
-                    alignItems="center"
+                    alignItems="stretch"
 
-                    gap="20px"
+                    gap="80px"
                     alignSelf={{ md: "auto", base: "stretch" }}
                     flexDirection={{ md: "row", base: "column" }}
                 >
@@ -59,30 +58,17 @@ export default function Footer({ ...props }) {
                         <Heading size="headingxs" as="h4" letterSpacing="-0.48px">The Team</Heading>
                         <Heading as="h1" letterSpacing="-2.16px" lineHeight="120%">
                             <>
-                                April Wang
+                                April Wang: apwang@inf.ethz.ch
                                 <br />
-                                Lilian Lopez
+                                Lilian Lopez: llopez@ethz.ch
                                 <br />
-                                Kiara Chau
+                                Kiara Chau: kchaugarcia@ethz.ch
                                 <br />
-                                Zeyu Xiong
+                                Zeyu Xiong: zeyu.xiong@inf.ethz.ch
                             </>
                         </Heading>
                     </Flex>
                 </Flex>
-                <Heading as="h1"
-                    letterSpacing="-2.16px" alignSelf={{
-                        md: "end", base:
-                            "auto"
-                    }}
-                    w={{ md: "28%", base: "100%" }}
-                    lineHeight="120%">
-                    <>
-                        apwang@inf.ethz.ch                <br />
-                        llopez@ethz. ch                <br />
-                        kchaugarcia@ethz.ch                <br />
-                        zeyu.xiong@inf.ethz.ch                </>
-                </Heading>
             </Container>
         </Flex>
     );

@@ -15,9 +15,10 @@ export default function HomeSection() {
                     <Container gap="17px"
                         w="'100%"
                         display="flex" justifyContent="flex-end" alignItems="center" maxW="1152px" px="8px"
-                        mx="auto">
+                        mx="auto"
+                        >
                         <Button>Home</Button>
-                        <Link href="Login" target="_blank" rel="noreferreril" alignself="end">
+                        <Link href="Login" target="_blank" rel="noreferreril" alignself="center">
                             <Text>Login</Text>
                         </Link>
                     </Container >

@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Footer from "../components/Footer";
 import AboutSection from "./AboutSection";
@@ -10,6 +10,61 @@ import { Box, Image, Flex } from "@chakra-ui/react";
 import HomeButton from "components/HomeButton";
 
 // todo: create referenced (linked) pages
+
+const Home = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Home - Explore the datAR Project and Custom Pieces</title>
+            </Helmet>
+            <Flex gap={{ md: "92px", base: "46px", sm: "69px" }} bg="white.a700" w="100%" flexDirection="column">
+                <Flex flexDirection="column" alignItems="center">
+                    {/* home section */}
+                    <HomeSection />
+
+                    {/* about section */}
+                    <AboutSection />
+                    <Image
+                        src="images/img_ideation_update.png"
+                        alt="Ideation Image" h={{
+                            md: "614px", base:
+                                "auto"
+                        }}
+                        mt="60px"
+                        fit="cover"
+                        w="100%"
+                        maxw="798px"
+                        mx="auto"
+                        p={{
+                            md: 0, base: "20px"
+                        }}
+                    />
+                    <>
+                        {/* home section */}
+                        <Flex mt="70px" alignSelf="stretch" justifyContent="center" px={{ md: "56px", base: "20px" }}>
+                            <Flex gap="40px" w="100%" maxW="820px" mx="auto" flexDirection={{ md: "row", base: "column" }}>
+                                <Suspense fallback={<div>Loading feed...</div>}>
+                                    <Link to="/mycustompieces" style={{ textDecoration: "none" }}>
+                                        <HomeButton text="My Custom Pieces" imgsrc="images/bookicon.png" key={"homeList" + 0} />
+                                    </Link>
+                                    <Link to="/browsecustompieces" style={{ textDecoration: "none" }}>
+                                        <HomeButton text="Browse Pieces" imgsrc="images/search.svg" key={"homeList" + 1} />
+                                    </Link>
+                                    <Link to="/myclassrooms" style={{ textDecoration: "none" }}>
+                                        <HomeButton text="My Classrooms" imgsrc="images/sandbox.svg" key={"homeList" + 2} />
+                                    </Link>
+                                </Suspense>
+                            </Flex>
+                        </Flex>
+                    </>
+                </Flex>
+                <Footer />
+            </Flex>
+        </>
+    );
+}
+export default Home;
+
 // const Home = () => {
 //     return (
 //         <div style={{ height: "100vh", padding: "20px", backgroundColor: "#232323", color: "white" }}>
@@ -114,51 +169,3 @@ import HomeButton from "components/HomeButton";
 //         </div>
 //     )
 // }
-const Home = () => {
-    return (
-        <>
-            <Helmet>
-                <title>Home - Explore the datAR Project and Custom Pieces</title>
-            </Helmet>
-            <Flex gap={{ md: "92px", base: "46px", sm: "69px" }} bg="white.a700" w="100%" flexDirection="column">
-                <Flex flexDirection="column" alignItems="center">
-                    {/* home section */}
-                    <HomeSection />
-
-                    {/* about section */}
-                    <AboutSection />
-                    <Image
-                        src="images/img_ideation_update.png"
-                        alt="Ideation Image" h={{
-                            md: "614px", base:
-                                "auto"
-                        }}
-                        mt="60px"
-                        fit="cover"
-                        w="100%"
-                        maxw="798px"
-                        mx="auto"
-                        p={{
-                            md: 0, base: "20px"
-                        }}
-                    />
-                    <>
-                        {/* home section */}
-                        <Flex mt="70px" alignSelf="stretch" justifyContent="center" px={{ md: "56px", base: "20px" }}>
-                            <Flex gap="40px" w="100%" maxW="820px" mx="auto" flexDirection={{ md: "row", base: "column" }}>
-                                <Suspense fallback={<div>Loading feed...</div>}>
-                                    
-                                    <HomeButton text="My Custom Pieces" imgsrc="images/bookicon.png" key={"homeList" + 0} />
-                                    <HomeButton text="Browse Pieces" imgsrc="images/search.svg" key={"homeList" + 1} />
-                                    <HomeButton text="My Classrooms" imgsrc="images/sandbox.svg" key={"homeList" + 2} />
-                                </Suspense>
-                            </Flex>
-                        </Flex>
-                    </>
-                </Flex>
-                <Footer />
-            </Flex>
-        </>
-    );
-}
-export default Home;
