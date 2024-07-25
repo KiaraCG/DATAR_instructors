@@ -1,73 +1,23 @@
-import { defineStyle, defineStyleConfig } from "@chakra-ui/styled-system";
-const baseStyle = defineStyle({
-    borderRadius: "8px", outlineOffset: "0", cursor: "pointer", flexDirection:
-        "row"
-});
+import { extendTheme } from '@chakra-ui/react'
+import * as components from './components'
+import * as foundations from './foundations'
 
-const sizes = {
+// Extract component style configs
+const { Text, Heading, Button, Input, Tabs, Container } = components
 
-    md: defineStyle({
+// Extend the theme with foundations and components
+const overrides = {
+	...foundations,
+	components: {
+		Text,
+		Heading,
+		Button,
+		Input,
+		Tabs,
+		Container,
+	},
+}
 
-        h: "44px",
+const theme = extendTheme(overrides)
 
-        fontSize:
-            "16px",
-
-        px: "34px",
-    }),
-
-
-    sm: defineStyle({
-
-        h: "40px",
-
-        fontSize:
-            "16px",
-
-        px: "34px",
-    }),
-
-
-    xs: defineStyle({
-
-        h: "32px",
-
-        fontSize:
-            "16px", px: "6px",
-    }),
-};
-const variants = {
-    outline: defineStyle((props) => {
-        const { colorScheme } = props;
-        const colorCombinations = {
-            black_900: {
-                borderColor: "black. 900", borderWidth: "1px",
-                borderStyle: "solid", color: "blue_gray.900_01",
-            },
-        };
-        return colorCombinations[colorScheme] || colorCombinations["black_900"];
-    }),
-
-    fill: defineStyle((props) => {
-        const { colorScheme } = props;
-        const colorCombinations = {
-            gray_100: {
-                bg: "gray.100", color: "gray.900",
-            },
-            gray_300: {
-                bg: "gray.300", color: "gray.900",
-            },
-            blue_gray_900: {
-                bg: "blue_gray. 900", color: "gray.100",
-            },
-        };
-        return colorCombinations[colorScheme] || colorCombinations["blue_gray_900"];
-    }),
-};
-const Button = defineStyleConfig({
-    baseStyle, variants, sizes,
-    defaultProps: {
-        variant: "fill", size: "xs",
-    },
-});
-export default Button;
+export default theme
