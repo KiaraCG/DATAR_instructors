@@ -13,7 +13,7 @@ export default function HomeSection() {
                     p={{ base: "20px", sm: "24px" }}
                 >
                     <Container gap="17px"
-                        w="'100%"
+                        w="100%"
                         display="flex" justifyContent="flex-end" alignItems="center" maxW="1152px" px="8px"
                         mx="auto"
                         >

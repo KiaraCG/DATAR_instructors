@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet";
 import Footer from "../components/Footer";
 import AboutSection from "./AboutSection";
 import HomeSection from "./HomeSection";
-// import HomeSection1 from "/HomeSection1";
 import { Box, Image, Flex } from "@chakra-ui/react";
 
 import HomeButton from "components/HomeButton";
@@ -24,6 +23,7 @@ const Home = () => {
 
                     {/* about section */}
                     <AboutSection />
+                    <br />
                     <Image
                         src="images/img_ideation_update.png"
                         alt="Ideation Image" h={{
@@ -58,6 +58,8 @@ const Home = () => {
                         </Flex>
                     </>
                 </Flex>
+                <br />
+                <br />
                 <Footer />
             </Flex>
         </>
