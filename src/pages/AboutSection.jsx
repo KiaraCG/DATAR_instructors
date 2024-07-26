@@ -20,7 +20,7 @@ export default function AboutSection() {
                         as="span"
                         color="black.900">
                         <>
-                            &nbsp; Project <br />
+                            &nbsp;Project <br />
                         </>
                     </Heading>
                     <Heading

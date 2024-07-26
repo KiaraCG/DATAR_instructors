@@ -33,14 +33,14 @@ const colors = {
             "#14ae5c",
     },
     purple: {
-        100: "#elcdf0",
+        a100: "#elcdf0",
     },
     red: {
-        100: "#f0cdd4",
+        a100: "#f0cdd4",
         "400_47": "#c84d6347",
     },
     teal: {
-        50: "#def3ee",
+        a50: "#def3ee",
         "400_47": "#18a88647",
     },
     white: {

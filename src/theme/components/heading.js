@@ -3,17 +3,18 @@ const baseStyle = {
 };
 const sizes = {
     headingxs: {
-        fontSize: {
-            md: "48px",
-            base: "38px",
-            sm:
-                "44px",
-        },
+        fontSize: "20px",
+        // {
+        //     md: "48px",
+        //     base: "38px",
+        //     sm:
+        //         "44px",
+        // },
         fontWeight: 700, fontStyle:
             "bold",
     },
     headings: {
-        fontSize: "16px", fontWeight: 600, fontStyle:
+        fontSize: "50px", fontWeight: 600, fontStyle:
             "bold",
     },
     headingmd: {

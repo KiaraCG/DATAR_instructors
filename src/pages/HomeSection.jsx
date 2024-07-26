@@ -17,9 +17,9 @@ export default function HomeSection() {
                         display="flex" justifyContent="flex-end" alignItems="center" maxW="1152px" px="8px"
                         mx="auto"
                         >
-                        <Button>Home</Button>
+                        <Button background="white">Home</Button>
                         <Link href="Login" target="_blank" rel="noreferreril" alignself="center">
-                            <Text>Login</Text>
+                            <Text color="white">Login</Text>
                         </Link>
                     </Container >
                 </Flex >

@@ -13,18 +13,18 @@ import {
 import React, { Suspense } from "react";
 const data = [
     {
-        userImage: "images/piece_placeholder.png",
+        
         duplicateColumnsText: "Duplicate columns", dataManipulationText: "Data manipulation",
     },
-    { userImage: "images/piece_placeholder.png", duplicateColumnsText: "Plants collection", dataManipulationText: "CSV" },
+    { duplicateColumnsText: "Plants collection", dataManipulationText: "CSV" },
     {
-        userImage: "images/piece_placeholder.png", duplicateColumnsText: "Heart rate measurements", dataManipulationText: "CSV",
+     duplicateColumnsText: "Heart rate measurements", dataManipulationText: "CSV",
     },
-    { userImage: "images/piece_placeholder.png", duplicateColumnsText: "Boxplot", dataManipulationText: "Visualization" },
+    {  duplicateColumnsText: "Boxplot", dataManipulationText: "Visualization" },
     {
-        userImage: "images/piece_placeholder.png", duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization",
+       duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization",
     },
-    { userImage: "images/piece_placeholder.png", duplicateColumnsText: "Water intake", dataManipulationText: "CSV" },
+    {duplicateColumnsText: "Water intake", dataManipulationText: "CSV" },
 ];
 
 export default function MyCustomPiecesPage() {
@@ -39,8 +39,8 @@ export default function MyCustomPiecesPage() {
     return (
         <>
             <Helmet>
-                <title>Kiara&#39;s Application2</title>
-                <meta name="description" content="Web site created using create-react-app" />
+                <title>datAR - My Custom Pieces</title>
+                {/* <meta name="description" content="Web site created using create-react-app" /> */}
             </Helmet>
             <Box bg="white.a700"
                 w="100%">
@@ -86,7 +86,7 @@ export default function MyCustomPiecesPage() {
                                                     color="gray, 900" fontSize="16px"
                                                     gap="8px"
                                                     display="flex" bg="gray.100"
-                                                    flexDirection="row" justifyContent="center" alignItems="center" textAlign="center" cursor="pointer"
+                                                    flexDirection="row" justifyContent="flex-start" alignItems="flex-start" textAlign="flex-start" cursor="pointer"
                                                     h="32px"
                                                     minW="72px"
                                                     px="6px"
@@ -147,18 +147,16 @@ export default function MyCustomPiecesPage() {
                                         {searchBarValue1?.length > 0 ? (
                                             <CloseIcon onClick={() => setSearchBarValue1("")} />
                                         ) : (
-                                            <Image src="images/img_search.svg" alt="Search" w="16px" h="16px" />
+                                            <Image src="images/search.svg" alt="Search" w="16px" h="16px" />
                                         )}
                                     </InputRightElement>
                                 </ InputGroup>
                                 <Flex gap="8px" flexDirection={{ base: "column", sm: "row" }}>
-                                    <a href="https://www.youtube.com/embed/bv8Fxk0sz7I" target="_blank">
                                         <Button leftIcon={<Image
-                                            src="images/img_plus_gray_100.svg" alt="Plus" />} gap="8px"
-                                            minW="156px">
+                                            src="images/img_plus_gray_100.svg" alt="Plus" boxSize="16px"/>} gap="2px"
+                                            minW="156px" color="gray.100">
                                             Add New Piece
                                         </Button>
-                                    </a>
                                     <Text
                                         color="gray.600" bg="gray.100"
                                         justifyContent="center"
