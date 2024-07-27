@@ -44,7 +44,7 @@ export default function UserProfile2({
             {...props} gap="16px"
             borderColor="blue_gray. 100" borderWidth="1px"
             borderStyle="solid" bg="white.a700"
-            W="100%"
+            w="100%"
             flexDirection="column" justifyContent="center"
             p="14px"
             borderRadius="8px"

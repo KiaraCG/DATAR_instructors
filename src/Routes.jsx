@@ -5,6 +5,8 @@ import NotFound from "pages/NotFound";
 import MyCustomPieces from "pages/MyCustomPieces";
 import MyClassroomsPage from "pages/MyClassrooms";
 import BrowseCustomPiecesPage from "pages/BrowseCustomPieces";
+import AddNewPiece from "pages/NewPiece";
+import LoginPage from "pages/Login";
 
 // todo: add rest of routes
 
@@ -15,6 +17,8 @@ const ProjectRoutes = () => {
         {path:"/mycustompieces", element: <MyCustomPieces />},
         {path:"/myclassrooms", element: <MyClassroomsPage />},
         {path:"/browsecustompieces", element: <BrowseCustomPiecesPage />},
+        {path:"/newpiece", element: <AddNewPiece />},
+        {path:"/login", element: <LoginPage />},
     ]);
     return element;
 }

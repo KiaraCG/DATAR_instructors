@@ -30,9 +30,9 @@ export default function MyclassroomsRowtitleFour() {
                     md: "62px"
                     , base: "20px"
                 }}>
-                    <Container display="flex" px={{ base: "20px", sm: "40px" }} p={{
+                    <Container display="flex" px={{ base: "100px", sm: "40px" }} p={{
                         md:
-                            0, base: "20px"
+                            "20px", base: "20px"
                     }}>
                         <Flex gap="10px" w="100%" flexDirection="column" alignItems="start">
                             <Heading size="headingmd" as="h1" letterSpacing="-0.48px">
@@ -47,7 +47,7 @@ export default function MyclassroomsRowtitleFour() {
                         </ Flex>
                     </Container >
                 </Flex >
-                <Container mt="-86px" position="relative" px={{ base: "20px", sm: "40px" }} p={{ md: 0, base: "20px" }} >
+                <Container mt="-86px" position="relative" px={{ base: "20px",  md:"100px", sm: "40px" }} p={{ md: "20px", base: "20px" }} >
                     <Accordion gap="16px" display="flex" flexDirection="column" allowToggle>
                         {classIDs.map((id) => (
                             <AccordionItem>
@@ -90,6 +90,9 @@ export default function MyclassroomsRowtitleFour() {
                             </AccordionItem>
                         ))}
                     </Accordion>
+                    <Button gap = "7px" rightIcon={<Image src="images/white_plus.png" w="16px"/>}width="100%" color="gray.100_01" mt="16px" position={"relative"} px={{ base: "40px", sm: "40px" }} p={{ md: "20px", base: "20px" }}>
+                        Add New Classroom
+                    </Button>
                 </Container>
             </Flex>
         </Box>

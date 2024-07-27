@@ -99,7 +99,7 @@ export default function BrowseCustomPiecesPage() {
                                                     cursor="pointer"
                                                     h="32px"
                                                     minW="72px"
-                                                    pX="6px"
+                                                    px="6px"
                                                     borderRadius="8px" >
                                                     <span>{option.label}</span>
                                                     <Image src="images/img_arrowright.svg" alt="Arrow Right" w="16px" h="16px" />
@@ -151,7 +151,7 @@ export default function BrowseCustomPiecesPage() {
                                     options={chipOptions1} setOptions={setChipOptions1}
                                     values={selectedChipOptions1}
                                     setValues={setSelectedChipOptions1}
-                                    W=" 56%"
+                                    w="56%"
                                     display="flex" flexWrap="wrap"
                                     gap="8px"
                                 >
@@ -173,7 +173,7 @@ export default function BrowseCustomPiecesPage() {
                                                 <Box
                                                     onClick={option.toggle}
                                                     color="gray.600"
-                                                    fontsize="16px"
+                                                    fontSize="16px"
                                                     bg="gray. 100" display="flex" flexDirection="row" justifyContent="center" alignItems="center" textAlign="center" cursor="pointer"
                                                     h="32px"
                                                     minW="134px"

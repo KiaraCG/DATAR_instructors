@@ -18,8 +18,10 @@ export default function HomeSection() {
                         mx="auto"
                         >
                         <Button background="white">Home</Button>
-                        <Link href="Login" target="_blank" rel="noreferreril" alignself="center">
-                            <Text color="white">Login</Text>
+                        <Link href="/login" target="_blank" rel="noreferreril" alignself="center">
+                            <Text color="gray.100_01" px="8px" py="4px" borderRadius="8px" _hover={{
+                                color: "black.900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
+                            }}>Login</Text>
                         </Link>
                     </Container >
                 </Flex >

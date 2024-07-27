@@ -25,7 +25,7 @@ export default function Header({page=3,...props}) {
         } else if (page===2) {
             return ["gray.100_01","gray.100_01","black.900","gray.100_01","gray.100_01"];
         } else if (page===3) {
-            return ["gray.100_01","gray.100_01","gray.100_01","black.900",""];
+            return ["gray.100_01","gray.100_01","gray.100_01","black.900","gray.100_01"];
         } else {
             return ["gray.100_01","gray.100_01","gray.100_01","gray.100_01","black.900"];
         }
@@ -38,7 +38,7 @@ export default function Header({page=3,...props}) {
             alignItems="flex-end"
             py={{ base: "20px", sm: "24px" }}
             as="header"
-        > <Container display="flex" justifyContent="flex-end" px="10px" p={{ md: 0, base: "20px" }}>
+        > <Container display="flex" justifyContent="flex-end" px="10px" p="0" mr="10px" ml="10px">
                 <UnorderedList styleType="none" gap="8px" display="flex" alignItems="flex-end" flexWrap="wrap">
                     <ListItem>
                         <Link href="/myclassrooms" justifyContent="center" display="flex" alignItems="flex-end">

@@ -6,7 +6,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import {
     Box, SimpleGrid,
     Text,
-    Button,
+    Button, Link,
     Image, Flex, InputRightElement, InputGroup,
     Input, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Container,
 } from "@chakra-ui/react";
@@ -34,11 +34,10 @@ export default function MyCustomPiecesPage() {
         <>
             <Helmet>
                 <title>datAR - My Custom Pieces</title>
-                {/* <meta name="description" content="Web site created using create-react-app" /> */}
             </Helmet>
             <Box bg="white.a700"
                 w="100%">
-                <Header page={1}/>
+                <Header page={1} />
                 <Flex bg="white.a700"
                     py={{
                         base: "20px", sm:
@@ -145,13 +144,15 @@ export default function MyCustomPiecesPage() {
                                         )}
                                     </InputRightElement>
                                 </ InputGroup>
-                                
+
                                 <Flex gap="8px" flexDirection={{ base: "column", sm: "row" }}>
-                                    <Button leftIcon={<Image
-                                        src="images/white_plus.png" alt="Plus" boxSize="16px" />} gap="2px"
-                                        minW="156px" color="gray.100">
-                                        Add New Piece
-                                    </Button>
+                                    <Link href="/newpiece" justifyContent="center" display="flex" alignItems="flex-end">
+                                        <Button leftIcon={<Image
+                                            src="images/white_plus.png" alt="Plus" boxSize="16px" />} gap="2px"
+                                            minW="156px" color="gray.100">
+                                            Add New Piece
+                                        </Button>
+                                    </Link>
                                     <Text
                                         color="gray.600" bg="gray.100"
                                         justifyContent="center"
