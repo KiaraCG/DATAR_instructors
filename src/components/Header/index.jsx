@@ -1,6 +1,36 @@
 import { Text, Link, UnorderedList, ListItem, Container, Flex } from "@chakra-ui/react";
 import React from "react";
-export default function Header({ ...props }) {
+
+
+export default function Header({page=3,...props}) {
+
+    const getBackgroundColors = () => {
+        if (page === 0) {
+            return ["gray.100","","","",""];
+        } else if (page === 1) {
+            return ["","gray.100","","",""];
+        } else if (page===2) {
+            return ["","","gray.100","",""];
+        } else if (page===3) {
+            return ["","","","gray.100",""];
+        } else {
+            return ["","","","","gray.100"];
+        }
+    };
+    const getTextColors = () => {
+        if (page === 0) {
+            return ["black.900","gray.100_01","gray.100_01","gray.100_01","gray.100_01"];
+        } else if (page === 1) {
+            return ["gray.100_01","black.900","gray.100_01","gray.100_01","gray.100_01"];
+        } else if (page===2) {
+            return ["gray.100_01","gray.100_01","black.900","gray.100_01","gray.100_01"];
+        } else if (page===3) {
+            return ["gray.100_01","gray.100_01","gray.100_01","black.900",""];
+        } else {
+            return ["gray.100_01","gray.100_01","gray.100_01","gray.100_01","black.900"];
+        }
+    };
+
     return (
         <Flex
             {...props} borderColor="blue_gray. 100" borderBottomWidth="1px"
@@ -11,32 +41,40 @@ export default function Header({ ...props }) {
         > <Container display="flex" justifyContent="flex-end" px="10px" p={{ md: 0, base: "20px" }}>
                 <UnorderedList styleType="none" gap="8px" display="flex" alignItems="flex-end" flexWrap="wrap">
                     <ListItem>
-                        <Link href="/myclassrooms" bg="gray.100" justifyContent="center" display="flex" alignItems="flex-end">
-                            <Text color="black.900" px="8px" py="4px" borderRadius="8px">
+                        <Link href="/myclassrooms" justifyContent="center" display="flex" alignItems="flex-end">
+                            <Text color={getTextColors()[0]} px="8px" py="4px" borderRadius="8px"
+                            bg={getBackgroundColors()[0]}
+                            _hover={{
+                                color: "black.900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
+                            }}>
                                 My Classrooms
                             </Text>
                         </Link>
                     </ListItem>
                     <ListItem>
-                        <Link href="/mypieces"
+                        <Link href="/mycustompieces"
                             cursor="pointer">
                             <Text
-                                color="gray.100_01"
+                                color={getTextColors()[1]}
                                 px="8px"
                                 py="4px"
+                                borderRadius="8" 
+                                bg={getBackgroundColors(page)[1]}
                                 _hover={{
                                     color: "black.900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
-                                }}
+                                }}                
                             >
                                 My Pieces </Text>
                         </Link>
                     </ListItem>
                     <ListItem>
-                        <Link href="/browsepieces"
+                        <Link href="/browsecustompieces"
                             cursor="pointer">
                             <Text
-                                color="gray.100_01" px="8px"
+                                color={getTextColors()[2]} px="8px"
                                 py="4px"
+                                borderRadius="8px"
+                                bg={getBackgroundColors(page)[2]}
                                 _hover={{
                                     color: "black.900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
                                 }}
@@ -48,11 +86,12 @@ export default function Header({ ...props }) {
                         <Link href="/"
                             cursor="pointer">
                             <Text
-                                color="white.a700" px="8px"
+                                color={getTextColors()[3]} px="8px"
                                 py="4px"
+                                borderRadius="8px"
+                                bg={getBackgroundColors(page)[3]}
                                 _hover={{
-                                    color:
-                                        "black. 900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
+                                    color: "black.900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
                                 }}
                             >
                                 Home
@@ -63,11 +102,13 @@ export default function Header({ ...props }) {
                         <Link href="/"
                             cursor="pointer">
                             <Text
-                                color="gray.100_01"
+                                color={getTextColors()[4]}
                                 px="8px"
                                 py="4px"
-                                hover={{
-                                    color: "black, 900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
+                                borderRadius="8px"
+                                bg={getBackgroundColors(page)[4]}
+                                _hover={{
+                                    color: "black.900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
                                 }}
                             > Logout
                             </Text>

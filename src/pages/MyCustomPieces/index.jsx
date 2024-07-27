@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
-import { ChipView } from "../../components/ChipView"; 
-import Header from "../../components/Header"; 
+import { ChipView } from "../../components/ChipView";
+import Header from "../../components/Header";
 import UserProfile1 from "../../components/UserProfile1";
 import { CloseIcon } from "@chakra-ui/icons";
 import {
@@ -11,20 +11,14 @@ import {
     Input, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Container,
 } from "@chakra-ui/react";
 import React, { Suspense } from "react";
+
 const data = [
-    {
-        
-        duplicateColumnsText: "Duplicate columns", dataManipulationText: "Data manipulation",
-    },
+    { duplicateColumnsText: "Duplicate columns", dataManipulationText: "Data manipulation", },
     { duplicateColumnsText: "Plants collection", dataManipulationText: "CSV" },
-    {
-     duplicateColumnsText: "Heart rate measurements", dataManipulationText: "CSV",
-    },
-    {  duplicateColumnsText: "Boxplot", dataManipulationText: "Visualization" },
-    {
-       duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization",
-    },
-    {duplicateColumnsText: "Water intake", dataManipulationText: "CSV" },
+    { duplicateColumnsText: "Heart rate measurements", dataManipulationText: "CSV", },
+    { duplicateColumnsText: "Boxplot", dataManipulationText: "Visualization" },
+    { duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization", },
+    { duplicateColumnsText: "Water intake", dataManipulationText: "CSV" },
 ];
 
 export default function MyCustomPiecesPage() {
@@ -44,7 +38,7 @@ export default function MyCustomPiecesPage() {
             </Helmet>
             <Box bg="white.a700"
                 w="100%">
-                <Header />
+                <Header page={1}/>
                 <Flex bg="white.a700"
                     py={{
                         base: "20px", sm:
@@ -119,7 +113,7 @@ export default function MyCustomPiecesPage() {
                                 <Flex justifyContent="space-between" alignItems="center" gap="20px">
                                     <Text>Date created</Text>
                                     <Flex>
-                                         <Text
+                                        <Text
                                             size="textxs">2024-2025</Text>
                                     </Flex>
                                 </Flex>
@@ -132,11 +126,11 @@ export default function MyCustomPiecesPage() {
                             </Flex>
                         </ Flex>
                         <Flex gap="48px" alignSelf={{ md: "center", base: "stretch" }} flex={1} flexDirection="column">
-                            <Flex justifyContent="center" alignItems="center" flexDirection={{
+                            <Flex justifyContent="center" alignItems="space-around" flexDirection={{
                                 md:
                                     "row", base: "column"
                             }}>
-                                <InputGroup w={{ md: "36%", base: "100%" }}>
+                                <InputGroup w={{ md: "20rem", base: "100%" }} mr="16px">
                                     <Input
                                         placeholder={`Search`} value={searchBarValue1}
                                         onChange={(e) => setSearchBarValue1(e.target.value)}
@@ -151,12 +145,13 @@ export default function MyCustomPiecesPage() {
                                         )}
                                     </InputRightElement>
                                 </ InputGroup>
+                                
                                 <Flex gap="8px" flexDirection={{ base: "column", sm: "row" }}>
-                                        <Button leftIcon={<Image
-                                            src="images/img_plus_gray_100.svg" alt="Plus" boxSize="16px"/>} gap="2px"
-                                            minW="156px" color="gray.100">
-                                            Add New Piece
-                                        </Button>
+                                    <Button leftIcon={<Image
+                                        src="images/white_plus.png" alt="Plus" boxSize="16px" />} gap="2px"
+                                        minW="156px" color="gray.100">
+                                        Add New Piece
+                                    </Button>
                                     <Text
                                         color="gray.600" bg="gray.100"
                                         justifyContent="center"
