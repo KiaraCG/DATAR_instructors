@@ -11,21 +11,21 @@ export default function NewPieceSection() {
             <Flex mb="4px" flexDirection="column" alignItems="center">
                 <Flex bg="white.a700" alignSelf="stretch" px={{ md: "0px", base: "20px" }}> <Container mt="60px" w="100%" display="flex" maxW="1072px" px="0px" mx="auto">
                     <Heading as="h1"
-                        ml={{ md: "12px", base: "Opx" }} letterSpacing="—0.48px">
+                             ml={{ md: "12px", base: "Opx" }} letterSpacing="—0.48px">
                         New Piece </Heading>
                 </Container>
                 </Flex>
                 <Container mt="40px"
-                    gap="8px"
-                    display="flex" alignSelf="stretch" flexDirection="column" alignItems="start" maxW="1082px"
-                    w="100%"
-                    px="0px"
-                    mx="auto"
-                    p={{ md: 0, base: "20px" }}
+                           gap="8px"
+                           display="flex" alignSelf="stretch" flexDirection="column" alignItems="start" maxW="1082px"
+                           w="100%"
+                           px="0px"
+                           mx="auto"
+                           p={{ md: 0, base: "20px" }}
                 >
                     <Text ml={{ md: "12px", base: "Opx" }}>Title</Text>
                     <Textarea
-                    ml={{ md: "12px", base: "Opx" }}
+                        ml={{ md: "12px", base: "Opx" }}
                         placeholder={`Add your piece's title.`}
                         color="gray.600"
                         bordercolor="blue_gray.100"
@@ -33,7 +33,7 @@ export default function NewPieceSection() {
                         borderRadius="8px"
                     />
                 </Container>
-                
+
                 <Container
                     mt="40px"
                     gap="8px"
@@ -47,7 +47,7 @@ export default function NewPieceSection() {
                 >
                     <Text ml={{ md: "12px", base: "Opx" }} >Please select a category for your custom piece</Text>
                     <SelectBox
-                    ml={{ md: "12px", base: "Opx" }}
+                        ml={{ md: "12px", base: "Opx" }}
                         shape="round"
                         indicator={<Image src="images/img_arrowdown.svg" alt="Arrow Down" w="16px" h="16px" />} name="Category Dropdown" placeholder={'Category'} options={dropDownOptions}
                         style={{
@@ -73,19 +73,19 @@ export default function NewPieceSection() {
                 >
 
                     <Text ml={{ md: "12px", base: "Opx" }} >Please upload the corresponding Python script or CSV file.</Text>
-                    <Button 
-                    ml={{ md: "12px", base: "Opx" }}
-                    color={"gray.100"} leftIcon={<Image src="images/upload.png" alt="Upload" boxSize={"20px"} />} gap="2px">
+                    <Button
+                        ml={{ md: "12px", base: "Opx" }}
+                        color={"gray.100"} leftIcon={<Image src="images/upload.png" alt="Upload" boxSize={"20px"} />} gap="2px">
                         Browse Files
                     </Button>
                 </Container>
                 <Container mt="40px"
-                    gap="8px"
-                    display="flex" alignSelf="stretch" flexDirection="column" alignItems="start" maxW="1082px"
-                    w="100%"
-                    px="0px"
-                    mx="auto"
-                    p={{ md: 0, base: "20px" }}
+                           gap="8px"
+                           display="flex" alignSelf="stretch" flexDirection="column" alignItems="start" maxW="1082px"
+                           w="100%"
+                           px="0px"
+                           mx="auto"
+                           p={{ md: 0, base: "20px" }}
                 >
                     <Text ml={{ md: "12px", base: "Opx" }}>Description</Text>
                     <Textarea
@@ -124,8 +124,8 @@ export default function NewPieceSection() {
                     </Flex>
                     <Box mt="26px" ml={{ md: "16px", base: "0px" }} alignSelf="stretch">
                         <Flex gap="12px" alignItems={"center"}>
-                        {/* icon={<Image src="images/checkbox.svg" alt="Checkbox Icon" h="16px" borderRadius={"4px"} />} */}
-                            <Checkbox defaultChecked> 
+                            {/* icon={<Image src="images/checkbox.svg" alt="Checkbox Icon" h="16px" borderRadius={"4px"} />} */}
+                            <Checkbox defaultChecked>
                                 <Text>Make public</Text>
                             </Checkbox>
                         </Flex>
@@ -136,20 +136,20 @@ export default function NewPieceSection() {
                         </Flex>
                     </Box>
                     <Link href="/mycustompieces">
-                    <Button
-                        variant="fill"
-                        mt="70px"
-                        ml={{
-                            md: "10px",
-                            base:
-                                "20px"
-                        }}
-                        alignSelf="start"
-                        minW="394px"
-                        color="gray.100">
+                        <Button
+                            variant="fill"
+                            mt="70px"
+                            ml={{
+                                md: "10px",
+                                base:
+                                    "20px"
+                            }}
+                            alignSelf="start"
+                            minW="394px"
+                            color="gray.100">
 
-                        Submit Custom Piece
-                    </Button>
+                            Submit Custom Piece
+                        </Button>
                     </Link>
                 </Container>
             </Flex>

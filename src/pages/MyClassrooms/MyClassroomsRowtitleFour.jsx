@@ -9,15 +9,15 @@ import {
     Flex,
     Box,
     SimpleGrid,
-    Button,
+    Button, Link,
 } from "@chakra-ui/react";
 import UserProfile1 from "../../components/UserProfile1";
-import React, { Suspense } from "react";
+import React, {Suspense} from "react";
 
 const data = [
-    { duplicateColumnsText: "Duplicate columns", dataManipulationText: "Data manipulation", },
-    { duplicateColumnsText: "Plants collection", dataManipulationText: "CSV" },
-    { duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization", },
+    {duplicateColumnsText: "Duplicate columns", dataManipulationText: "Data manipulation",},
+    {duplicateColumnsText: "Plants collection", dataManipulationText: "CSV"},
+    {duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization",},
 ];
 
 let classIDs = [123456, 987654, 673786, 382764];
@@ -30,7 +30,7 @@ export default function MyclassroomsRowtitleFour() {
                     md: "62px"
                     , base: "20px"
                 }}>
-                    <Container display="flex" px={{ base: "100px", sm: "40px" }} p={{
+                    <Container display="flex" px={{base: "100px", sm: "40px"}} p={{
                         md:
                             "20px", base: "20px"
                     }}>
@@ -45,9 +45,10 @@ export default function MyclassroomsRowtitleFour() {
                                 </Heading>
                             </Flex>
                         </ Flex>
-                    </Container >
-                </Flex >
-                <Container mt="-86px" position="relative" px={{ base: "20px",  md:"100px", sm: "40px" }} p={{ md: "20px", base: "20px" }} >
+                    </Container>
+                </Flex>
+                <Container mt="-86px" position="relative" px={{base: "20px", md: "100px", sm: "40px"}}
+                           p={{md: "20px", base: "20px"}}>
                     <Accordion gap="16px" display="flex" flexDirection="column" allowToggle>
                         {classIDs.map((id) => (
                             <AccordionItem>
@@ -63,22 +64,22 @@ export default function MyclassroomsRowtitleFour() {
                                             borderRadius="8px">
                                             <Heading
                                                 as="h3" size="headingxs">Classroom ID: {id}</Heading>
-                                            <Image src="images/img_arrow_down.svg" alt="Arrowdown" h="20px" w="20px" />
+                                            <Image src="images/img_arrow_down.svg" alt="Arrowdown" h="20px" w="20px"/>
                                         </AccordionButton>
                                         <AccordionPanel>
-                                            <br />
-                                            <SimpleGrid ml={{ md: "62px", base: "Opx" }} gap="24px" columns={{
+                                            <br/>
+                                            <SimpleGrid ml={{md: "62px", base: "Opx"}} gap="24px" columns={{
                                                 md: 3, base: 1,
                                                 sm: 2
                                             }}>
                                                 <Suspense fallback={<div>Loading feed...</div>}>
                                                     {data.map((d, index) => (
-                                                        <UserProfile1 {...d} key={"cardgrid" + index} />
+                                                        <UserProfile1 {...d} key={"cardgrid" + index}/>
                                                     ))}
                                                 </Suspense>
                                                 <Button rightIcon={<Image
-                                                    src="images/printer.png" alt="Plus" boxSize="16px" />} gap="2px"
-                                                    minW="156px" color="gray.100" maxW="1600px">
+                                                    src="images/printer.png" alt="Plus" boxSize="16px"/>} gap="2px"
+                                                        minW="156px" color="gray.100" maxW="1600px">
                                                     Print QR Codes
                                                 </Button>
 
@@ -90,9 +91,13 @@ export default function MyclassroomsRowtitleFour() {
                             </AccordionItem>
                         ))}
                     </Accordion>
-                    <Button gap = "7px" rightIcon={<Image src="images/white_plus.png" w="16px"/>}width="100%" color="gray.100_01" mt="16px" position={"relative"} px={{ base: "40px", sm: "40px" }} p={{ md: "20px", base: "20px" }}>
-                        Add New Classroom
-                    </Button>
+                    <Link href="/newclassroom">
+                        <Button gap="7px" rightIcon={<Image src="images/white_plus.png" w="16px"/>} width="100%"
+                                color="gray.100_01" mt="16px" position={"relative"} px={{base: "40px", sm: "40px"}}
+                                p={{md: "20px", base: "20px"}}>
+                            Add New Classroom
+                        </Button>
+                    </Link>
                 </Container>
             </Flex>
         </Box>
