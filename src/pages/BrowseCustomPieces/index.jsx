@@ -1,40 +1,54 @@
-import { Helmet } from "react-helmet";
-import { ChipView } from "../../components/ChipView";
+import {Helmet} from "react-helmet";
+import {ChipView} from "../../components/ChipView";
 import Header from "../../components/Header";
 import UserProfile2 from "../../components/UserProfile2";
-import { CloseIcon } from "@chakra-ui/icons";
+import {CloseIcon} from "@chakra-ui/icons";
 import {
     Box,
     SimpleGrid, Image, InputRightElement, InputGroup,
     Input, Flex, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack,
     RangeSliderThumb,
-    Text, Container,
+    Text, Container, Link,
 } from "@chakra-ui/react";
-import React, { Suspense } from "react";
+import React, {Suspense, useEffect, useState} from "react";
+import axios from "axios";
 
 const data = [
-    { username: "@user4", categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162", },
-    { username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161" },
-    { username: "@user6", categoryTitle: "Building measurements", fileType: "CSV", downloadCount: "50" },
-    { username: "@user4", categoryTitle: "3D Barchart", fileType: "Visualization", downloadCount: "38" },
-    { username: "@user5", categoryTitle: "kNN Algorithm", fileType: "Data manipulation", downloadCount: "12" },
-    { username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7", }
+    {userImage: null, username: "@user4", categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162",},
+    {userImage: null, username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161"},
+    {userImage: null, username: "@user6", categoryTitle: "Building measurements", fileType: "CSV", downloadCount: "50"},
+    {userImage: null, username: "@user4", categoryTitle: "3D Barchart", fileType: "Visualization", downloadCount: "38"},
+    {userImage: null, username: "@user5", categoryTitle: "kNN Algorithm", fileType: "Data manipulation", downloadCount: "12"},
+    {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
 ];
-
 
 
 export default function BrowseCustomPiecesPage() {
     const [chipOptions1, setChipOptions1] = React.useState(() => [
-        { value: 1, label: 'User ascending' }, { value: 2, label: 'Date descending' },
-        { value: 3, label: 'Popularity Descending', }
+        {value: 1, label: 'User ascending'}, {value: 2, label: 'Date descending'},
+        {value: 3, label: 'Popularity Descending',}
     ]);
     const [selectedChipOptions1, setSelectedChipOptions1] = React.useState([]);
     const [searchBarValue2, setSearchBarValue2] = React.useState("");
     const [chipOptions, setChipOptions] = React.useState(() => [
-        { value: 1, label: `CSV` }, { value: 2, label: `Data manipulation` }, { value: 3, label: 'Visualization' },
+        {value: 1, label: `CSV`}, {value: 2, label: `Data manipulation`}, {value: 3, label: 'Visualization'},
 
     ]);
     const [selectedChipOptions, setSelectedChipOptions] = React.useState([]);
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        // Fetch the data from the API
+        axios.get('http://10.5.37.125:8000/files')  // Using relative path assuming proxy is set up correctly in package.json
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
     return (
         <>
             <Helmet>
@@ -42,7 +56,7 @@ export default function BrowseCustomPiecesPage() {
             </Helmet>
             <Box bg="white.a700" w="100%">
                 <Header page={2}/>
-                <Flex bg="white-a700" py={{ base: "20px", sm: "32px" }}>
+                <Flex bg="white-a700" py={{base: "20px", sm: "32px"}}>
                     <Container
                         display="flex" alignItems="start" px="8px"
                         flexDirection={{
@@ -50,7 +64,7 @@ export default function BrowseCustomPiecesPage() {
                             , base:
                                 "column"
                         }}
-                        p={{ md: 0, base: "20px" }}
+                        p={{md: 0, base: "20px"}}
                     >
                         <Flex
                             gap="24px"
@@ -67,7 +81,8 @@ export default function BrowseCustomPiecesPage() {
                             <Flex gap="12px" flexDirection="column" alignItems="start">
                                 <Text>Categories</Text>
                                 <ChipView
-                                    options={chipOptions} setOptions={setChipOptions} values={selectedChipOptions} setValues={setSelectedChipOptions}
+                                    options={chipOptions} setOptions={setChipOptions} values={selectedChipOptions}
+                                    setValues={setSelectedChipOptions}
                                     alignSelf="stretch"
                                     display="flex" flexWrap="wrap"
                                     gap="8px"
@@ -81,28 +96,32 @@ export default function BrowseCustomPiecesPage() {
                                                     color="gray.900" fontSize="16px"
                                                     gap="8px"
                                                     display="flex" bg="gray.100"
-                                                    flexDirection="row" justifyContent="center" alignItems="center" textAlign="center" cursor="pointer"
+                                                    flexDirection="row" justifyContent="center" alignItems="center"
+                                                    textAlign="center" cursor="pointer"
                                                     h="32px"
                                                     minW="72px"
                                                     px="6px"
                                                     borderRadius="8px"
                                                 >
                                                     <span> {option.label}</ span>
-                                                    <Image src="images/img_arrowright.svg" alt="Arrow Right" w="16px" h="16px" />
+                                                    <Image src="images/img_arrowright.svg" alt="Arrow Right" w="16px"
+                                                           h="16px"/>
                                                 </Box>
                                             ) : (
                                                 <Box
                                                     onClick={option.toggle} color="gray,900" fontSize="16px"
                                                     gap="8px"
                                                     display="flex" bg="gray. 100"
-                                                    flexDirection="row" justifyContent="center" alignItems="center" textAlign="center"
+                                                    flexDirection="row" justifyContent="center" alignItems="center"
+                                                    textAlign="center"
                                                     cursor="pointer"
                                                     h="32px"
                                                     minW="72px"
                                                     px="6px"
-                                                    borderRadius="8px" >
+                                                    borderRadius="8px">
                                                     <span>{option.label}</span>
-                                                    <Image src="images/img_arrowright.svg" alt="Arrow Right" w="16px" h="16px" />
+                                                    <Image src="images/img_arrowright.svg" alt="Arrow Right" w="16px"
+                                                           h="16px"/>
                                                 </Box>
                                             )}
                                         </React.Fragment>
@@ -119,20 +138,20 @@ export default function BrowseCustomPiecesPage() {
                                 </Flex>
                                 <RangeSlider defaultValue={[0, 20]} h="8px" display="flex">
                                     < RangeSliderTrack>
-                                        <RangeSliderFilledTrack />
+                                        <RangeSliderFilledTrack/>
                                     </RangeSliderTrack>
-                                    < RangeSliderThumb index={1} />
+                                    < RangeSliderThumb index={1}/>
                                 </RangeSlider>
                             </Flex>
                         </Flex>
 
-                        <Flex gap="48px" alignSelf={{ md: "center", base: "stretch" }} flex={1} flexDirection="column">
+                        <Flex gap="48px" alignSelf={{md: "center", base: "stretch"}} flex={1} flexDirection="column">
                             <Flex justifyContent="center" alignItems="center" flexDirection={{
                                 md: "row"
                                 , base:
                                     "column"
                             }}>
-                                <InputGroup w={{ md: "36%", base: "100%" }}>
+                                <InputGroup w={{md: "36%", base: "100%"}}>
                                     <Input
                                         placeholder={'Search'} value={searchBarValue2}
                                         onChange={(e) => setSearchBarValue2(e.target.value)}
@@ -141,9 +160,9 @@ export default function BrowseCustomPiecesPage() {
                                     />
                                     <InputRightElement>
                                         {searchBarValue2?.length > 0 ? (
-                                            <CloseIcon onClick={() => setSearchBarValue2("")} />
+                                            <CloseIcon onClick={() => setSearchBarValue2("")}/>
                                         ) : (
-                                            <Image src="images/search.svg" alt="Search" w="16px" h="16px" />
+                                            <Image src="images/search.svg" alt="Search" w="16px" h="16px"/>
                                         )}
                                     </InputRightElement>
                                 </InputGroup>
@@ -161,7 +180,8 @@ export default function BrowseCustomPiecesPage() {
                                                 <Box
                                                     onClick={option.toggle} color="gray, 600" fontSize="16px"
                                                     bg="gray.100"
-                                                    display="flex" flexDirection="row" justifyContent="center" alignItems="center" textAlign="center" cursor="pointer"
+                                                    display="flex" flexDirection="row" justifyContent="center"
+                                                    alignItems="center" textAlign="center" cursor="pointer"
                                                     h="32px"
                                                     minW="134px"
                                                     px="8px"
@@ -174,7 +194,9 @@ export default function BrowseCustomPiecesPage() {
                                                     onClick={option.toggle}
                                                     color="gray.600"
                                                     fontSize="16px"
-                                                    bg="gray. 100" display="flex" flexDirection="row" justifyContent="center" alignItems="center" textAlign="center" cursor="pointer"
+                                                    bg="gray. 100" display="flex" flexDirection="row"
+                                                    justifyContent="center" alignItems="center" textAlign="center"
+                                                    cursor="pointer"
                                                     h="32px"
                                                     minW="134px"
                                                     px="8px"
@@ -191,10 +213,15 @@ export default function BrowseCustomPiecesPage() {
                             <SimpleGrid m1={{
                                 md:
                                     "62px", base: "Opx"
-                            }} gap="24px" columns={{ md: 3, base: 1, sm: 2 }}>
+                            }} gap="24px" columns={{md: 3, base: 1, sm: 2}}>
                                 <Suspense fallback={<div>Loading feed...</div>}>
                                     {data.map((d, index) => (
-                                        <UserProfile2 {...d} key={"griduserfour" + index} />
+
+                                        <Link
+                                            href={`/piece?username=${encodeURIComponent("@user"+d.user_id)}&categoryTitle=${encodeURIComponent(d.title)}&fileType=${encodeURIComponent(d.type)}&downloadCount=${encodeURIComponent(d.downloadCount)}&description=${encodeURIComponent(d.description)}`}
+                                              key={"cardgrid" + index} >
+                                            <UserProfile2 {...d} key={"griduserfour" + index}/>
+                                        </Link>
                                     ))}
                                 </Suspense>
                             </SimpleGrid>

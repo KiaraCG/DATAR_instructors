@@ -13,8 +13,10 @@ export default function Header({page=3,...props}) {
             return ["","","gray.100","",""];
         } else if (page===3) {
             return ["","","","gray.100",""];
+        } else if (page === 4) {
+            return ["", "", "", "", "gray.100"];
         } else {
-            return ["","","","","gray.100"];
+            return ["","","","",""];
         }
     };
     const getTextColors = () => {
@@ -26,8 +28,10 @@ export default function Header({page=3,...props}) {
             return ["gray.100_01","gray.100_01","black.900","gray.100_01","gray.100_01"];
         } else if (page===3) {
             return ["gray.100_01","gray.100_01","gray.100_01","black.900","gray.100_01"];
-        } else {
+        } else if (page === 4) {
             return ["gray.100_01","gray.100_01","gray.100_01","gray.100_01","black.900"];
+        } else {
+            return ["gray.100_01","gray.100_01","gray.100_01","gray.100_01","gray.100_01"];
         }
     };
 
@@ -41,7 +45,8 @@ export default function Header({page=3,...props}) {
         > <Container display="flex" justifyContent="flex-end" px="10px" p="0" mr="10px" ml="10px">
                 <UnorderedList styleType="none" gap="8px" display="flex" alignItems="flex-end" flexWrap="wrap">
                     <ListItem>
-                        <Link href="/myclassrooms" justifyContent="center" display="flex" alignItems="flex-end">
+                        <Link href="/myclassrooms" justifyContent="center" display="flex" alignItems="flex-end"
+                              _hover={{color:"white"}}>
                             <Text color={getTextColors()[0]} px="8px" py="4px" borderRadius="8px"
                             bg={getBackgroundColors()[0]}
                             _hover={{
@@ -53,7 +58,8 @@ export default function Header({page=3,...props}) {
                     </ListItem>
                     <ListItem>
                         <Link href="/mycustompieces"
-                            cursor="pointer">
+                            cursor="pointer"
+                              _hover={{color:"white"}}>
                             <Text
                                 color={getTextColors()[1]}
                                 px="8px"
@@ -69,7 +75,8 @@ export default function Header({page=3,...props}) {
                     </ListItem>
                     <ListItem>
                         <Link href="/browsecustompieces"
-                            cursor="pointer">
+                            cursor="pointer"
+                              _hover={{color:"white"}}>
                             <Text
                                 color={getTextColors()[2]} px="8px"
                                 py="4px"
@@ -84,7 +91,8 @@ export default function Header({page=3,...props}) {
                     </ListItem>
                     <ListItem>
                         <Link href="/"
-                            cursor="pointer">
+                            cursor="pointer"
+                              _hover={{color:"white"}}>
                             <Text
                                 color={getTextColors()[3]} px="8px"
                                 py="4px"
@@ -100,7 +108,8 @@ export default function Header({page=3,...props}) {
                     </ListItem>
                     <ListItem>
                         <Link href="/"
-                            cursor="pointer">
+                            cursor="pointer"
+                              _hover={{color:"white"}}>
                             <Text
                                 color={getTextColors()[4]}
                                 px="8px"

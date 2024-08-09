@@ -10,18 +10,24 @@ import {
     Image, Flex, InputRightElement, InputGroup,
     Input, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Container,
 } from "@chakra-ui/react";
-import React, { Suspense } from "react";
+import React, {Suspense, useEffect, useState} from "react";
+import axios from "axios";
 
+// leave images out
+// TODO: get data from API (clone datar-backend, docker, localhost 8000)
+// TODO: create view file for CSV -> not script but table
+const id = 4;
 const data = [
-    { duplicateColumnsText: "Duplicate columns", dataManipulationText: "Data manipulation", },
-    { duplicateColumnsText: "Plants collection", dataManipulationText: "CSV" },
-    { duplicateColumnsText: "Heart rate measurements", dataManipulationText: "CSV", },
-    { duplicateColumnsText: "Boxplot", dataManipulationText: "Visualization" },
-    { duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization", },
-    { duplicateColumnsText: "Water intake", dataManipulationText: "CSV" },
+    {userImage: null, username: "@user"+{id}, categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162",},
+    {userImage: null, username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161"},
+    {userImage: null, username: "@user6", categoryTitle: "Building measurements", fileType: "CSV", downloadCount: "50"},
+    {userImage: null, username: "@user4", categoryTitle: "3D Barchart", fileType: "Visualization", downloadCount: "38"},
+    {userImage: null, username: "@user5", categoryTitle: "kNN Algorithm", fileType: "Data manipulation", downloadCount: "12"},
+    {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
 ];
 
 export default function MyCustomPiecesPage() {
+
     const [searchBarValue1, setSearchBarValue1] = React.useState("");
     const [chipOptions, setChipOptions] = React.useState(() => [
         { value: 1, label: `CSV` },
@@ -30,6 +36,20 @@ export default function MyCustomPiecesPage() {
     ]);
     const [selectedChipOptions, setSelectedChipOptions]
         = React.useState([]);
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        // Fetch the data from the API
+        axios.get('http://10.5.37.125:8000/files')  // Using relative path assuming proxy is set up correctly in package.json
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
     return (
         <>
             <Helmet>
@@ -38,7 +58,7 @@ export default function MyCustomPiecesPage() {
             <Box bg="white.a700"
                 w="100%">
                 <Header page={1} />
-                <Flex bg="white.a700"
+                <Flex bg="whitea700"
                     py={{
                         base: "20px", sm:
                             "32px"
@@ -177,9 +197,14 @@ export default function MyCustomPiecesPage() {
                                 md: 3, base: 1,
                                 sm: 2
                             }}>
+
                                 <Suspense fallback={<div>Loading feed...</div>}>
                                     {data.map((d, index) => (
+                                        <Link
+                                            href={`/piece?username=${encodeURIComponent("@user"+d.user_id)}&categoryTitle=${encodeURIComponent(d.title)}&fileType=${encodeURIComponent(d.type)}&downloadCount=${encodeURIComponent(d.downloadCount)}&description=${encodeURIComponent(d.description)}`}
+                                            key={"cardgrid" + index} _hover={{}} >
                                         <UserProfile1 {...d} key={"cardgrid" + index} />
+                                        </Link>
                                     ))}
                                 </Suspense>
                             </ SimpleGrid>

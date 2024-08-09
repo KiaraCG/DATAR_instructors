@@ -1,17 +1,42 @@
-import { SelectBox } from "../../components/SelectBox";
-import { Button, Box, Text, Link, Flex, Image, Container, Checkbox, Textarea, Heading } from "@chakra-ui/react"; import React from "react";
+import {SelectBox} from "../../components/SelectBox";
+import {Button, Box, Text, Link, Flex, Image, Container, Checkbox, Textarea, Heading } from "@chakra-ui/react";
+import React, {useRef} from "react";
+import ToggleComponent from "./ToggleComponent";
 
 const dropDownOptions = [
-    { label: "CSV File", value: "option1" }, { label: "Python Visualization", value: "option2" }, { label: "Python Script for Data Manipulation", value: "option" },
+    {label: "CSV File", value: "option1"}, {
+        label: "Python Visualization",
+        value: "option2"
+    }, {label: "Python Script for Data Manipulation", value: "option"},
 ];
 
+
 export default function NewPieceSection() {
+
+    const imgInputRef = useRef(null);
+
+
+    const handleImgUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            // Handle the uploaded file
+            console.log("File uploaded:", file);
+        }
+    };
+
+    const triggerImgInput = () => {
+        imgInputRef.current.click();
+    };
+
     return (
         <>
             <Flex mb="4px" flexDirection="column" alignItems="center">
-                <Flex bg="white.a700" alignSelf="stretch" px={{ md: "0px", base: "20px" }}> <Container mt="60px" w="100%" display="flex" maxW="1072px" px="0px" mx="auto">
+                <Flex bg="white.a700" alignSelf="stretch" px={{md: "0px", base: "20px"}}> <Container mt="60px" w="100%"
+                                                                                                     display="flex"
+                                                                                                     maxW="1072px"
+                                                                                                     px="0px" mx="auto">
                     <Heading as="h1"
-                             ml={{ md: "12px", base: "Opx" }} letterSpacing="—0.48px">
+                             ml={{md: "12px", base: "Opx"}} letterSpacing="—0.48px">
                         New Piece </Heading>
                 </Container>
                 </Flex>
@@ -21,11 +46,11 @@ export default function NewPieceSection() {
                            w="100%"
                            px="0px"
                            mx="auto"
-                           p={{ md: 0, base: "20px" }}
+                           p={{md: 0, base: "20px"}}
                 >
-                    <Text ml={{ md: "12px", base: "Opx" }}>Title</Text>
+                    <Text ml={{md: "12px", base: "Opx"}}>Title</Text>
                     <Textarea
-                        ml={{ md: "12px", base: "Opx" }}
+                        ml={{md: "12px", base: "Opx"}}
                         placeholder={`Add your piece's title.`}
                         color="gray.600"
                         bordercolor="blue_gray.100"
@@ -45,11 +70,12 @@ export default function NewPieceSection() {
                             0, base: "20px"
                     }}
                 >
-                    <Text ml={{ md: "12px", base: "Opx" }} >Please select a category for your custom piece</Text>
+                    <Text ml={{md: "12px", base: "Opx"}}>Please select a category for your custom piece</Text>
                     <SelectBox
-                        ml={{ md: "12px", base: "Opx" }}
+                        ml={{md: "12px", base: "Opx"}}
                         shape="round"
-                        indicator={<Image src="images/img_arrowdown.svg" alt="Arrow Down" w="16px" h="16px" />} name="Category Dropdown" placeholder={'Category'} options={dropDownOptions}
+                        indicator={<Image src="images/img_arrowdown.svg" alt="Arrow Down" w="16px" h="16px"/>}
+                        name="Category Dropdown" placeholder={'Category'} options={dropDownOptions}
                         style={{
                             gap: "16px", borderColor: "blue_gray.100", borderWidth: "0.5px", borderStyle: "solid"
                         }}
@@ -69,15 +95,9 @@ export default function NewPieceSection() {
                     px="0px"
                     mx="auto"
 
-                    p={{ md: 0, base: "20px" }}
+                    p={{md: 0, base: "20px"}}
                 >
-
-                    <Text ml={{ md: "12px", base: "Opx" }} >Please upload the corresponding Python script or CSV file.</Text>
-                    <Button
-                        ml={{ md: "12px", base: "Opx" }}
-                        color={"gray.100"} leftIcon={<Image src="images/upload.png" alt="Upload" boxSize={"20px"} />} gap="2px">
-                        Browse Files
-                    </Button>
+                    <ToggleComponent />
                 </Container>
                 <Container mt="40px"
                            gap="8px"
@@ -85,16 +105,16 @@ export default function NewPieceSection() {
                            w="100%"
                            px="0px"
                            mx="auto"
-                           p={{ md: 0, base: "20px" }}
+                           p={{md: 0, base: "20px"}}
                 >
-                    <Text ml={{ md: "12px", base: "Opx" }}>Description</Text>
+                    <Text ml={{md: "12px", base: "Opx"}}>Description</Text>
                     <Textarea
                         placeholder={`Add a brief description of your piece.`}
                         color="gray.600"
                         bordercolor="blue_gray.100"
                         w="70%"
                         borderRadius="8px"
-                        ml={{ md: "12px", base: "Opx" }}
+                        ml={{md: "12px", base: "Opx"}}
                     />
                 </Container>
 
@@ -110,26 +130,34 @@ export default function NewPieceSection() {
                     px="0px"
                     mx="auto"
 
-                    p={{ md: 0, base: "20px" }}
+                    p={{md: 0, base: "20px"}}
                 >
                     <Button
-                        ml={{ md: "12px", base: "Opx" }}
+                        ml={{md: "12px", base: "Opx"}}
                         gap="2px"
                         minW="210px"
                         color={"gray.100"}
-                        leftIcon={<Image src="images/upload.png" alt="Upload" boxSize={"20px"} />}
+                        leftIcon={<Image src="images/upload.png" alt="Upload" boxSize={"20px"}/>}
+                        onClick={triggerImgInput}
                     > Add Image (Optional)
                     </Button>
-                    <Flex w={{ md: "52%", base: "100%" }} px="12px" py="8px" borderRadius="8px"> <Text color="gray.600">The file should be a png or jpeg image.</Text>
+                    <input
+                        type="file"
+                        ref={imgInputRef}
+                        style={{display: 'none'}}
+                        onChange={handleImgUpload}
+                    />
+                    <Flex w={{md: "52%", base: "100%"}} px="12px" py="8px" borderRadius="8px"> <Text color="gray.400">The
+                        file should be a png or jpeg image.</Text>
                     </Flex>
-                    <Box mt="26px" ml={{ md: "16px", base: "0px" }} alignSelf="stretch">
+                    <Box mt="26px" ml={{md: "16px", base: "0px"}} alignSelf="stretch">
                         <Flex gap="12px" alignItems={"center"}>
                             {/* icon={<Image src="images/checkbox.svg" alt="Checkbox Icon" h="16px" borderRadius={"4px"} />} */}
                             <Checkbox defaultChecked>
                                 <Text>Make public</Text>
                             </Checkbox>
                         </Flex>
-                        <Flex px={{ base: "20px", sm: "28px" }}>
+                        <Flex px={{base: "20px", sm: "28px"}}>
                             <Text color="gray.600">
                                 This allows other users to view and download your piece in the 'Browse Pieces' section.
                             </Text>

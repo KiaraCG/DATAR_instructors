@@ -15,9 +15,9 @@ import UserProfile1 from "../../components/UserProfile1";
 import React, {Suspense} from "react";
 
 const data = [
-    {duplicateColumnsText: "Duplicate columns", dataManipulationText: "Data manipulation",},
-    {duplicateColumnsText: "Plants collection", dataManipulationText: "CSV"},
-    {duplicateColumnsText: "Colored Scatterplot", dataManipulationText: "Visualization",},
+    {categoryTitle: "Duplicate columns", fileType: "Data manipulation",},
+    {categoryTitle: "Plants collection", fileType: "CSV"},
+    {categoryTitle: "Colored Scatterplot", fileType: "Visualization",},
 ];
 
 let classIDs = [123456, 987654, 673786, 382764];
@@ -51,7 +51,7 @@ export default function MyclassroomsRowtitleFour() {
                            p={{md: "20px", base: "20px"}}>
                     <Accordion gap="16px" display="flex" flexDirection="column" allowToggle>
                         {classIDs.map((id) => (
-                            <AccordionItem>
+                            <AccordionItem key={id}>
                                 {(props) => (
                                     <>
                                         <AccordionButton
@@ -74,7 +74,11 @@ export default function MyclassroomsRowtitleFour() {
                                             }}>
                                                 <Suspense fallback={<div>Loading feed...</div>}>
                                                     {data.map((d, index) => (
+                                                        <Link
+                                                            href={`/piece?userImage=${encodeURIComponent(d.userImage)}&username=${encodeURIComponent(d.username)}&categoryTitle=${encodeURIComponent(d.categoryTitle)}&fileType=${encodeURIComponent(d.fileType)}&downloadCount=${encodeURIComponent(d.downloadCount)}`}
+                                                            key={"cardgrid" + index} _hover={{color:"white"}}>
                                                         <UserProfile1 {...d} key={"cardgrid" + index}/>
+                                                        </Link>
                                                     ))}
                                                 </Suspense>
                                                 <Button rightIcon={<Image

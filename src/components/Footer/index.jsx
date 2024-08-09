@@ -58,9 +58,10 @@ export default function Footer(props) {
             </Heading>
             <Heading as="h1" letterSpacing="-0.9px" lineHeight="120%" fontSize="16px" color="white" fontWeight={300}>
               <>
-                VL-HCC Demonstration
+                Custom text
+                {/*VL-HCC Demonstration*/}
                 <br />
-                CHI Paper
+                {/*CHI Paper*/}
               </>
             </Heading>
           </Flex>
@@ -76,13 +77,14 @@ export default function Footer(props) {
             </Heading>
             <Heading as="h1" letterSpacing="-0.9px" lineHeight="120%" fontSize="16px" color="white" fontWeight={300}>
               <>
-                April Wang: apwang@inf.ethz.ch
+                Custom text
+                {/*Lilian Lopez: llopez@ethz.ch*/}
                 <br />
-                Lilian Lopez: llopez@ethz.ch
+                {/*Kiara Chau: kchaugarcia@ethz.ch*/}
                 <br />
-                Kiara Chau: kchaugarcia@ethz.ch
+                {/*April Wang: apwang@inf.ethz.ch*/}
                 <br />
-                Zeyu Xiong: zeyu.xiong@inf.ethz.ch
+                {/*Zeyu Xiong: zeyu.xiong@inf.ethz.ch*/}
               </>
             </Heading>
           </Flex>
