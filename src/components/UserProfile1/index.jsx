@@ -1,7 +1,7 @@
 import { Heading, Text, Flex, Image } from "@chakra-ui/react"; import React from "react";
 export default function UserProfile1({
     userImage = null,
-                                         categoryTitle = "Title",
+                                         title = "Title",
     type = "Data manipulation",
     ...props
 }) {
@@ -56,7 +56,7 @@ export default function UserProfile1({
     > <Image src={getPlaceholder(type)} alt="Duplicate" h="246px" fit="cover" w="100%" />
         <Flex gap="8px" alignSelf="stretch" flexDirection="column" alignItems="start">
             <Flex alignSelf="stretch">
-                <Text>{categoryTitle}</Text>
+                <Text>{title}</Text>
             </Flex>
             <Heading as="h6"
                 bg="red.a100"

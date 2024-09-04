@@ -2,7 +2,7 @@
     "name": "datar-instructor-destop-app",
     "version": "0.1.0",
     "private": true,
-    "proxy": "http://10.5.37.125:8000",
+    "proxy": "http://129.132.15.76:8008",
     "dependencies": {
         "@chakra-ui/icons": "^2.1.1",
         "@chakra-ui/react": "^2.8.2",

@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import Footer from "../components/Footer";
 import AboutSection from "./AboutSection";
 import HomeSection from "./HomeSection";
-import { Box, Image, Flex } from "@chakra-ui/react";
+import { Image, Flex } from "@chakra-ui/react";
 
 import HomeButton from "components/HomeButton";
 

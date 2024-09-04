@@ -30,7 +30,9 @@ export default function AboutSection() {
                         </>
                     </Heading >
                     <Heading as="p" color="black.900" letterSpacing="-1.48px" fontSize="24px" fontWeight={200} style={{ lineHeight: '32px' }}>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;5 standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        Data literacy, defined as the ability to work with and understand data, is an essential competency for the younger generation.
+                        However, the traditional plugged approach, where students primarily use computers and begin with pre-existing datasets often lacks hands-on engagement and real-world relevance.
+                        We present datAR, a tablet-based data analysis application that enables learners to explore real-world data embedded in everyday objects through augmented reality and tangible programming.
                         <br />
                         <br />
                     </Heading>

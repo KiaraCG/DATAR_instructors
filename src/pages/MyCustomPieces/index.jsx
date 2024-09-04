@@ -1,47 +1,53 @@
-import { Helmet } from "react-helmet";
-import { ChipView } from "../../components/ChipView";
+import {Helmet} from "react-helmet";
+import {ChipView} from "../../components/ChipView";
 import Header from "../../components/Header";
 import UserProfile1 from "../../components/UserProfile1";
-import { CloseIcon } from "@chakra-ui/icons";
+import {CloseIcon} from "@chakra-ui/icons";
 import {
     Box, SimpleGrid,
     Text,
     Button, Link,
     Image, Flex, InputRightElement, InputGroup,
-    Input, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Container,
+    Input, Container,
 } from "@chakra-ui/react";
-import React, {Suspense, useEffect, useState} from "react";
+import React, {Suspense, useContext, useEffect, useState} from "react";
 import axios from "axios";
+import { AuthContext } from '../../AuthContext';
 
-// leave images out
-// TODO: get data from API (clone datar-backend, docker, localhost 8000)
-// TODO: create view file for CSV -> not script but table
-const id = 4;
-const data = [
-    {userImage: null, username: "@user"+{id}, categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162",},
-    {userImage: null, username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161"},
-    {userImage: null, username: "@user6", categoryTitle: "Building measurements", fileType: "CSV", downloadCount: "50"},
-    {userImage: null, username: "@user4", categoryTitle: "3D Barchart", fileType: "Visualization", downloadCount: "38"},
-    {userImage: null, username: "@user5", categoryTitle: "kNN Algorithm", fileType: "Data manipulation", downloadCount: "12"},
-    {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
-];
+// TODO: get id from LOGIN
+const id = 2;
+// const data = [
+//     {userImage: null, username: "@user"+{id}, categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162",},
+//     {userImage: null, username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161"},
+//     {userImage: null, username: "@user6", categoryTitle: "Building measurements", fileType: "CSV", downloadCount: "50"},
+//     {userImage: null, username: "@user4", categoryTitle: "3D Barchart", fileType: "Visualization", downloadCount: "38"},
+//     {userImage: null, username: "@user5", categoryTitle: "kNN Algorithm", fileType: "Data manipulation", downloadCount: "12"},
+//     {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
+// ];
 
 export default function MyCustomPiecesPage() {
+    const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+        console.log('User:', user); // Check user state in PrivateRoute
+    }, [user]);
 
     const [searchBarValue1, setSearchBarValue1] = React.useState("");
     const [chipOptions, setChipOptions] = React.useState(() => [
-        { value: 1, label: `CSV` },
-        { value: 2, label: `Data manipulation` },
-        { value: 3, label: `Visualization` },
+        {value: 1, type: `data`, label: 'CSV'},
+        {value: 2, type: `manipulation`, label: 'Data Manipulation'},
+        {value: 3, type: `visualization`, label: 'Visualization'},
     ]);
     const [selectedChipOptions, setSelectedChipOptions]
         = React.useState([]);
 
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+
 
     useEffect(() => {
         // Fetch the data from the API
-        axios.get('http://10.5.37.125:8000/files')  // Using relative path assuming proxy is set up correctly in package.json
+        axios.get('http://129.132.15.76:8008/files/?user_id=' + id)  // Using relative path assuming proxy is set up correctly in package.json
             .then(response => {
                 setData(response.data);
             })
@@ -50,26 +56,36 @@ export default function MyCustomPiecesPage() {
             });
     }, []);
 
+    useEffect(() => {
+        // Filter the data based on the selected chip option
+        if (selectedChipOptions.length > 0) {
+            const selectedFileTypes = chipOptions.filter(option => selectedChipOptions.includes(option.value)).map((option) => option.type);
+            setFilteredData(data.filter(d => selectedFileTypes.includes(d.type)));
+        } else {
+            setFilteredData(data); // Show all data if no chip is selected
+        }
+    }, [selectedChipOptions, data, chipOptions]);
+
     return (
         <>
             <Helmet>
                 <title>datAR - My Custom Pieces</title>
             </Helmet>
             <Box bg="white.a700"
-                w="100%">
-                <Header page={1} />
+                 w="100%">
+                <Header page={1}/>
                 <Flex bg="whitea700"
-                    py={{
-                        base: "20px", sm:
-                            "32px"
-                    }}>
+                      py={{
+                          base: "20px", sm:
+                              "32px"
+                      }}>
                     <Container
                         display="flex" alignItems="start"
                         px="8px"
-                        flexDirection={{ md: "row", base: "column" }} p={{
-                            md: 0, base:
-                                "20px"
-                        }}
+                        flexDirection={{md: "row", base: "column"}} p={{
+                        md: 0, base:
+                            "20px"
+                    }}
                     >
                         <Flex
                             gap="24px"
@@ -85,10 +101,11 @@ export default function MyCustomPiecesPage() {
                             borderRadius="8px"
                         >
                             <Flex gap="12px" flexDirection="column"
-                                alignItems="start">
-                                <Text>Categories</Text>
+                                  alignItems="start">
+                                <Text>Category Filter</Text>
                                 <ChipView
-                                    options={chipOptions} setOptions={setChipOptions} values={selectedChipOptions} setValues={setSelectedChipOptions}
+                                    options={chipOptions} setOptions={setChipOptions} values={selectedChipOptions}
+                                    setValues={setSelectedChipOptions}
                                     alignSelf="stretch" display="flex" flexWrap="wrap"
                                     gap="8px">
                                     {(option) => (
@@ -96,60 +113,45 @@ export default function MyCustomPiecesPage() {
                                             {option.isSelected ? (
                                                 <Box
                                                     onClick={option.toggle}
-                                                    color="gray, 900" fontSize="16px"
+                                                    color="gray.900" fontSize="16px"
                                                     gap="8px"
-                                                    display="flex" bg="gray.100"
-                                                    flexDirection="row" justifyContent="flex-start" alignItems="flex-start" textAlign="flex-start" cursor="pointer"
+                                                    display="flex" bg="gray.300"
+                                                    flexDirection="row" justifyContent="flex-start" alignItems="center"
+                                                    textAlign="center" cursor="pointer"
                                                     h="32px"
-                                                    minW="72px"
+                                                    minW="20px"
                                                     px="6px"
                                                     borderRadius="8px"
                                                 >
                                                     <span>{option.label}</span>
-                                                    < Image
-                                                        src="images/img_arrowright.svg" alt="Arrow Right" w="16px" h="16px" />
+
                                                 </ Box>
                                             ) : (
                                                 <Box
                                                     onClick={option.toggle} color="gray.900" fontSize="16px"
                                                     gap="8px"
-                                                    display="flex" bg="gray. 100"
-                                                    flexDirection="row" justifyContent="center" alignItems="center" textAlign="center" cursor="pointer"
+                                                    display="flex"
+                                                    flexDirection="row" justifyContent="flex-start" alignItems="center"
+                                                    textAlign="center" cursor="pointer"
                                                     h="32px"
-                                                    minW="72px"
+                                                    minW="20px"
                                                     px="6px"
                                                     borderRadius="8px">
                                                     <span>{option.label}</span>
-                                                    <Image src="images/img_arrowright.svg" alt="Arrow Right"
-                                                        w="16px" h="16px" />
                                                 </Box>
                                             )}
                                         </React.Fragment>
                                     )}
                                 </ChipView>
                             </Flex>
-                            <Flex gap="12px" flexDirection="column">
-                                <Flex justifyContent="space-between" alignItems="center" gap="20px">
-                                    <Text>Date created</Text>
-                                    <Flex>
-                                        <Text
-                                            size="textxs">2024-2025</Text>
-                                    </Flex>
-                                </Flex>
-                                <RangeSlider defaultValue={[0, 20]} h="8px" display="flex">
-                                    <RangeSliderTrack>
-                                        <RangeSliderFilledTrack />
-                                    </RangeSliderTrack>
-                                    <RangeSliderThumb index={1} />
-                                </RangeSlider>
-                            </Flex>
+
                         </ Flex>
-                        <Flex gap="48px" alignSelf={{ md: "center", base: "stretch" }} flex={1} flexDirection="column">
-                            <Flex justifyContent="center" alignItems="space-around" flexDirection={{
+                        <Flex gap="48px" alignSelf={{md: "center", base: "stretch"}} flex={1} flexDirection="column">
+                            <Flex ml="55px" justifyContent="flex-start" alignItems="space-around" flexDirection={{
                                 md:
-                                    "row", base: "column"
+                                    "row", base: "row"
                             }}>
-                                <InputGroup w={{ md: "20rem", base: "100%" }} mr="16px">
+                                <InputGroup w={{md: "20rem", base: "100%"}} mr="16px">
                                     <Input
                                         placeholder={`Search`} value={searchBarValue1}
                                         onChange={(e) => setSearchBarValue1(e.target.value)}
@@ -158,52 +160,33 @@ export default function MyCustomPiecesPage() {
                                     />
                                     <InputRightElement>
                                         {searchBarValue1?.length > 0 ? (
-                                            <CloseIcon onClick={() => setSearchBarValue1("")} />
+                                            <CloseIcon onClick={() => setSearchBarValue1("")}/>
                                         ) : (
-                                            <Image src="images/search.svg" alt="Search" w="16px" h="16px" />
+                                            <Image src="images/search.svg" alt="Search" w="16px" h="16px"/>
                                         )}
                                     </InputRightElement>
                                 </ InputGroup>
-
-                                <Flex gap="8px" flexDirection={{ base: "column", sm: "row" }}>
-                                    <Link href="/newpiece" justifyContent="center" display="flex" alignItems="flex-end">
+                                <Flex gap="8px" flexDirection={{base: "column", sm: "row"}}>
+                                    <Link href="/newpiece">
                                         <Button leftIcon={<Image
-                                            src="images/white_plus.png" alt="Plus" boxSize="16px" />} gap="2px"
-                                            minW="156px" color="gray.100">
+                                            src="images/white_plus.png" alt="Plus" boxSize="16px"/>} gap="2px"
+                                                minW="156px" color="gray.100" h="30px">
                                             Add New Piece
                                         </Button>
                                     </Link>
-                                    <Text
-                                        color="gray.600" bg="gray.100"
-                                        justifyContent="center"
-                                        display="flex" alignItems="center" px="8px"
-                                        py="4px"
-                                        borderRadius="8px">
-                                        Date ascending
-                                    </Text>
-                                    <Text
-                                        color="gray.600"
-                                        bg="gray.100"
-                                        justifyContent="center"
-                                        display="flex" alignItems="center" px="8px"
-                                        py="4px"
-                                        borderRadius="8px"
-                                    > Date descending
-
-                                    </Text>
                                 </Flex>
                             </Flex>
-                            <SimpleGrid ml={{ md: "62px", base: "Opx" }} gap="24px" columns={{
+                            <SimpleGrid ml={{md: "62px", base: "Opx"}} gap="24px" columns={{
                                 md: 3, base: 1,
                                 sm: 2
                             }}>
 
                                 <Suspense fallback={<div>Loading feed...</div>}>
-                                    {data.map((d, index) => (
+                                    {filteredData.map((d, index) => (
                                         <Link
-                                            href={`/piece?username=${encodeURIComponent("@user"+d.user_id)}&categoryTitle=${encodeURIComponent(d.title)}&fileType=${encodeURIComponent(d.type)}&downloadCount=${encodeURIComponent(d.downloadCount)}&description=${encodeURIComponent(d.description)}`}
-                                            key={"cardgrid" + index} _hover={{}} >
-                                        <UserProfile1 {...d} key={"cardgrid" + index} />
+                                            href={`/piece?username=${encodeURIComponent("@user"+d.user_id)}&categoryTitle=${encodeURIComponent(d.title)}&fileType=${encodeURIComponent(d.type)}&downloadCount=${encodeURIComponent(d.download_count)}&description=${encodeURIComponent(d.description)}&filename=${encodeURIComponent(d.filename)}&fileId=${encodeURIComponent(d.id)}`}
+                                            key={"cardgrid" + index} _hover={{}}>
+                                            <UserProfile1 {...d} key={"cardgrid" + index}/>
                                         </Link>
                                     ))}
                                 </Suspense>

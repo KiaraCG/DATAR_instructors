@@ -1,44 +1,49 @@
-import { Text, Image, Flex, Heading, Box } from "@chakra-ui/react";
+import {Text, Image, Flex, Heading, Box} from "@chakra-ui/react";
 import React from "react";
 
 
-
 export default function UserProfile2({
-    userImage = null,
-    username = "@user4",
-    categoryTitle = "Supermarkets",
-    fileType = "CSV",
-    downloadCount = "162",
-    ...props
-}) {
+                                         userImage = null,
+                                         user_id = "@user4",
+                                         title = "Supermarkets",
+                                         type = "CSV",
+                                         download_count = "162",
+                                         ...props
+                                     }) {
     const getPlaceholder = (text) => {
-        if (userImage == null) {
-            if (text.includes('Visualization')) {
-                return 'images/placeholder_purple.png';
-            } else if (text.includes('Data manipulation')) {
-                return "images/placeholder_red.png";
-            } else if (text.includes('CSV')) {
-                return "images/piece_placeholder.png";
-            } else {
-                throw new Error("Not a valid text.");
-            }
+        if (text.includes('visualization')) {
+            return 'images/placeholder_purple.png';
+        } else if (text.includes('manipulation')) {
+            return "images/placeholder_red.png";
+        } else if (text.includes('data')) {
+            return "images/piece_placeholder.png";
         } else {
-            return {userImage};
+            throw new Error("Not a valid text.");
         }
     };
-    
+
     const getBackgroundColor = (text) => {
-        if (text.includes('Visualization')) {
+        if (text.includes('visualization')) {
             return 'purple.100';
-        } else if (text.includes('Data manipulation')) {
+        } else if (text.includes('manipulation')) {
             return 'red.100';
-        } else if (text.includes('CSV')) {
+        } else if (text.includes('data')) {
             return 'teal.400_47';
         } else {
             return 'white.a700';
         }
     };
-
+    const getLabel = (text) => {
+        if (text.includes('visualization')) {
+            return 'Visualization';
+        } else if (text.includes('manipulation')) {
+            return 'Data Manipulation';
+        } else if (text.includes('data')) {
+            return 'CSV';
+        } else {
+            return '';
+        }
+    };
     return (
         <Flex
             {...props} gap="16px"
@@ -50,7 +55,7 @@ export default function UserProfile2({
             borderRadius="8px"
         >
             <Box h="246px" alignSelf="stretch" position="relative" alignContent="center">
-                <Image src={getPlaceholder(fileType)} alt="Userfour" h="246px" flex={1} fit="cover" w="100%" mx="auto" />
+                <Image src={getPlaceholder(type)} alt="Userfour" h="246px" flex={1} fit="cover" w="100%" mx="auto"/>
                 <Heading
                     size="headingxs" as="h6"
                     fontSize="14px"
@@ -63,13 +68,13 @@ export default function UserProfile2({
                     m="auto"
                     borderRadius="8px"
                 >
-                    {username}
+                    @user{user_id}
                 </Heading>
             </Box>
 
             <Box h="52px"
-                alignSelf="stretch"
-                position="relative">
+                 alignSelf="stretch"
+                 position="relative">
                 <Flex
                     gap="8px"
                     flex={1}
@@ -78,21 +83,22 @@ export default function UserProfile2({
                     bottom="0px" right="Opx" top="Opx"
                     h="max-content"
                     m="auto"
-                    >
-                    <Text>{categoryTitle}</Text>
+                >
+                    <Text>{title}</Text>
                     <Heading as="h6"
-                        bg="teal.400_47" justifyContent="center"
-                        display="flex" alignItems="center"
-                        p="2px"
-                        fontSize="16px"
-                        borderRadius="8px"
-                        background={getBackgroundColor(fileType)}>
-                        {fileType}
+                             bg="teal.400_47" justifyContent="center"
+                             display="flex" alignItems="center"
+                             p="2px"
+                             fontSize="16px"
+                             borderRadius="8px"
+                             background={getBackgroundColor(type)}>
+                        {getLabel(type)}
                     </Heading>
                 </Flex>
-                <Flex gap="8px" alignItems="center" position="absolute" bottom="-1px" right="0px" m="auto" borderRadius="8px">
-                    <Image src="images/download.svg" alt="Image" h="16px" w="16px" />
-                    <Text color="blue_gray.900_01">{downloadCount}</Text>
+                <Flex gap="8px" alignItems="center" position="absolute" bottom="-1px" right="0px" m="auto"
+                      borderRadius="8px">
+                    <Image src="images/download.svg" alt="Image" h="16px" w="16px"/>
+                    <Text color="blue_gray.900_01">{download_count}</Text>
                 </Flex>
             </Box>
         </Flex>

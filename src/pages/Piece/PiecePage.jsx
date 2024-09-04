@@ -1,14 +1,15 @@
-import {Image, Heading, Box, Flex, Text, Button, Container, Link} from "@chakra-ui/react";
-import React from "react";
+import {Image, Heading, Box, Flex, Text, Button, Container } from "@chakra-ui/react";
+import React, {useEffect, useState} from "react";
 import {SelectBox} from "../../components/SelectBox";
 import {useLocation} from "react-router-dom";
 import ReadOnlyPythonEditor from "./ReadOnlyPythonEditor";
 import ReadOnlyCSV from "./ReadOnlyCSV";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 // should be gotten dynamically
-let classIDs = [123456, 987654, 673786, 382764];
-const classroomList = classIDs.map(id => (
-    {label: "Classroom ID: " + id.toString(), value: id}));
+let user_id = 1;
+
 
 export default function PiecePage() {
     const location = useLocation();
@@ -17,21 +18,66 @@ export default function PiecePage() {
     const username = params.get('username');
     const categoryTitle = params.get('categoryTitle');
     const fileType = params.get('fileType');
+    const filename = params.get('filename');
+    const description = params.get('description');
+    const fileId = params.get('fileId');
     // const downloadCount = params.get('downloadCount');
 
-    // dynamic params -> params.get('description');
-    const description = "This python script creates a 3D barchart for your chosen 3 columns in the dataset. Please change the input data accordingly."
+    const navigate = useNavigate();
+    const [selectedclass, setSelectedclass] = useState(0);
 
+    // handle assigning to classroom
+    const [classrooms, setClassrooms] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://129.132.15.76:8008/classrooms/lecturer/${user_id}`)
+            .then(response => {
+                setClassrooms(response.data.map(d => d.id));
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [user_id]);
+
+    const addToClass = async () => {
+        const jsonData = {
+            file_id: fileId,
+            classroom_id: selectedclass,
+        };
+        try {
+            const response = await axios.post('http://129.132.15.76:8008/file_classroom', jsonData, {
+                headers: {
+                    'Content-Type': 'application/json',  // Set the content type to JSON
+                },
+            });
+            await axios.post('http://129.132.15.76:8008/file/download_count/'+fileId);
+            console.log('Response:', response.data);
+            navigate('/myclassrooms');
+            // Redirect or show success message
+        } catch (error) {
+            if (error.response) {
+                console.error('Error response:', error.response.data);
+                console.error('Status:', error.response.status);
+                console.error('Headers:', error.response.headers);
+            } else if (error.request) {
+                console.error('Error request:', error.request);
+            } else {
+                console.error('Error message:', error.message);
+            }
+        }
+    }
+    // handle dynamic fetching of piece
     const getBody = ()=> {
         if (fileType.includes('visualization') || fileType.includes('manipulation')) {
-            return (<ReadOnlyPythonEditor path={"codepieces/sample.py"}/>
+            return (<ReadOnlyPythonEditor path={'http://129.132.15.76:8008/'+filename}/>
             );
         } else if (fileType.includes('data')) {
-            return <ReadOnlyCSV path={"codepieces/snacks.csv"}/>;
+            return <ReadOnlyCSV path={'http://129.132.15.76:8008/'+filename}/>;
         } else {
-            throw new Error("Not a valid text.");
+            throw new Error("Not a valid filename.");
         }
     };
+
 
     return (
         <>
@@ -55,14 +101,14 @@ export default function PiecePage() {
                     <Flex gap="10px" flexDirection="column">
                         <Flex gap="10px"
                               flexDirection="column" alignItems="start">
-                            <Button
-                                size="xs"
-                                // rightIcon={<Image src="images/img_pen_tool.svg" alt="Pen Tool"/>}
-                                gap="8px"
-                                minW="60px"
-                                color="gray.100">
-                                Edit
-                            </Button>
+                            {/*<Button*/}
+                            {/*    size="xs"*/}
+                            {/*    // rightIcon={<Image src="images/img_pen_tool.svg" alt="Pen Tool"/>}*/}
+                            {/*    gap="8px"*/}
+                            {/*    minW="60px"*/}
+                            {/*    color="gray.100">*/}
+                            {/*    Edit*/}
+                            {/*</Button>*/}
                             <Flex alignSelf="stretch">
                                 <Heading letterSpacing="-0.96px"> {categoryTitle} </Heading>
                             </Flex>
@@ -123,7 +169,9 @@ export default function PiecePage() {
                                         indicator={<Image src="images/img_arrowdown.svg" alt="Arrow Down" w="16px" h="16px" />}
                                         name="Select Classroom"
                                         placeholder={'Classroom'}
-                                        options={classroomList}
+
+                                        options={classrooms.map(id => (
+                                            {label: "Classroom ID: " + id.toString(), value: id}))}
                                         style={{
                                             gap: "16px",
                                             borderColor: "blue_gray.100",
@@ -132,14 +180,14 @@ export default function PiecePage() {
                                         }}
                                         minW="230px"
                                         w={{ md: "20%", base: "100%" }}
+                                        value={selectedclass}
+                                        onChange={(e) => setSelectedclass(e.target.value)}
                                     />
                                 </Flex>
                             </Box>
-                            <Link href="/myclassrooms">
-                                <Button minW="270px" w={{ md: "32%", base: "100%" }} color="gray.300" mr="30px">
-                                    Add Custom Piece to Classroom
-                                </Button>
-                            </Link>
+                            <Button minW="270px" w={{ md: "32%", base: "100%" }} color="gray.300" mr="30px" onClick={addToClass}>
+                                Add Custom Piece to Classroom
+                            </Button>
                         </Container>
                     </Flex>
 

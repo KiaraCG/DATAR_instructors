@@ -2,21 +2,32 @@ import React, {useRef, useState} from 'react';
 import {Button, Text, Image, Switch, Box, Flex} from '@chakra-ui/react';
 import Editor from '@monaco-editor/react';
 
-const ToggleComponent = () => {
+const ToggleComponent = ({onFileChange, title, id}) => {
     const [isLeftSelected, setIsLeftSelected] = useState(true);
 
     const fileInputRef = useRef(null);
+
+    const [code, setCode] = useState('# start writing your code here \n \n \n \n \n \n \n \n \n');
+
 
     const handleToggle = () => {
         setIsLeftSelected(!isLeftSelected);
     };
 
     const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            // Handle the uploaded file
-            console.log("File uploaded:", file);
+
+        if (isLeftSelected) {
+            const file = event.target.files[0];
+            if (file) {
+                console.log("File uploaded:", file);
+                onFileChange(file); // Pass the file to the parent component
+            }
+        } else {
+            const blob = new Blob([code], { type: 'text/python' });
+            const file = new File([blob], title+'_'+id+'.py', { type: 'text/python' });
+            onFileChange(file);
         }
+
     };
 
     const triggerFileInput = () => {
@@ -61,12 +72,25 @@ const ToggleComponent = () => {
                     </Text>
                 </Flex>
             ) : (
-                <Editor
-                    height="180px"
-                    width="100%"
-                    defaultLanguage="python"
-                    defaultValue={"# start writing your code here \n \n \n \n \n \n \n \n \n"}
-                />
+                <Flex flexDirection="column" justifyContent="flex-end" alignItems="flex-start">
+                    <Editor
+                        height="180px"
+                        width="100%"
+                        defaultLanguage="python"
+                        value={code}
+                    />
+                    <Button
+                    variant="fill"
+                    mt={"10px"}
+                    ml={{md: "10px", base: "20px"}}
+                    alignSelf="flex-end"
+                    w="140px"
+                    color="gray.100"
+                    onClick={handleFileUpload}
+                >
+                    Submit Code
+                </Button>
+                </Flex>
             )}
         </Box>
     );

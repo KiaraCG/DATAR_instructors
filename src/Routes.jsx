@@ -10,21 +10,41 @@ import LoginPage from "pages/Login";
 import NewClassroom from "./pages/NewClassroom";
 import Piece from "./pages/Piece";
 
-// todo: add rest of routes
+import PrivateRoute from './PrivateRoute';
+import { AuthProvider } from './AuthContext';
 
 const ProjectRoutes = () => {
     let element = useRoutes([
-        {path: "/", element: <Home />},
-        {path: "*", element: <NotFound />},
-        {path:"/mycustompieces", element: <MyCustomPieces />},
-        {path:"/myclassrooms", element: <MyClassroomsPage />},
-        {path:"/browsecustompieces", element: <BrowseCustomPiecesPage />},
-        {path:"/newpiece", element: <AddNewPiece />},
-        {path:"/login", element: <LoginPage />},
-        {path:"/newclassroom", element: <NewClassroom />},
-        {path:"/piece", element: <Piece />},
+        { path: "/", element: <Home /> },
+        { path: "*", element: <NotFound /> },
+        { path: "/mycustompieces", element: <PrivateRoute children={ <MyCustomPieces />} /> },
+        { path: "/myclassrooms", element: <PrivateRoute><MyClassroomsPage /></PrivateRoute> },
+        { path: "/browsecustompieces", element:  <BrowseCustomPiecesPage/> },
+        { path: "/newpiece", element: <PrivateRoute><AddNewPiece /></PrivateRoute> },
+        { path: "/login", element: <LoginPage /> },
+        { path: "/newclassroom", element: <PrivateRoute><NewClassroom /></PrivateRoute> },
+        { path: "/piece", element: <PrivateRoute><Piece /></PrivateRoute> },
     ]);
-    return element;
+
+    // Wrap the entire route system with AuthProvider
+    return <AuthProvider>{element}</AuthProvider>;
 }
 
 export default ProjectRoutes;
+
+
+// const ProjectRoutes = () => {
+//     let element = useRoutes([
+//         {path: "/", element: <Home />},
+//         {path: "*", element: <NotFound />},
+//         {path:"/mycustompieces", element: <MyCustomPieces />},
+//         {path:"/myclassrooms", element: <MyClassroomsPage />},
+//         {path:"/browsecustompieces", element: <BrowseCustomPiecesPage />},
+//         {path:"/newpiece", element: <AddNewPiece />},
+//         {path:"/login", element: <LoginPage />},
+//         {path:"/newclassroom", element: <NewClassroom />},
+//         {path:"/piece", element: <Piece />},
+//     ]);
+//     return element;
+// }
+

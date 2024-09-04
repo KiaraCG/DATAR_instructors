@@ -1,8 +1,14 @@
 import { Text, Link, UnorderedList, ListItem, Container, Flex } from "@chakra-ui/react";
-import React from "react";
+import React, {useContext} from "react";
+import {AuthContext} from "../../AuthContext";
 
 
 export default function Header({page=3,...props}) {
+
+    const context = useContext(AuthContext);
+    const handleLogout = () => {
+        context.logout();
+    }
 
     const getBackgroundColors = () => {
         if (page === 0) {
@@ -116,12 +122,14 @@ export default function Header({page=3,...props}) {
                                 py="4px"
                                 borderRadius="8px"
                                 bg={getBackgroundColors(page)[4]}
+                                onClick={handleLogout}
                                 _hover={{
                                     color: "black.900", borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 8, borderBottomRightRadius: 8, bg: "gray.100",
                                 }}
                             > Logout
                             </Text>
                         </Link>
+
                     </ListItem>
                 </UnorderedList>
             </Container>

@@ -6,48 +6,74 @@ import {CloseIcon} from "@chakra-ui/icons";
 import {
     Box,
     SimpleGrid, Image, InputRightElement, InputGroup,
-    Input, Flex, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack,
-    RangeSliderThumb,
-    Text, Container, Link,
+    Input, Flex,
+    Text, Container, Link, Select,
 } from "@chakra-ui/react";
 import React, {Suspense, useEffect, useState} from "react";
 import axios from "axios";
 
-const data = [
-    {userImage: null, username: "@user4", categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162",},
-    {userImage: null, username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161"},
-    {userImage: null, username: "@user6", categoryTitle: "Building measurements", fileType: "CSV", downloadCount: "50"},
-    {userImage: null, username: "@user4", categoryTitle: "3D Barchart", fileType: "Visualization", downloadCount: "38"},
-    {userImage: null, username: "@user5", categoryTitle: "kNN Algorithm", fileType: "Data manipulation", downloadCount: "12"},
-    {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
-];
-
+// const data = [
+//     {userImage: null, username: "@user4", categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162",},
+//     {userImage: null, username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161"},
+//     {userImage: null, username: "@user6", categoryTitle: "Building measurements", fileType: "CSV", downloadCount: "50"},
+//     {userImage: null, username: "@user4", categoryTitle: "3D Barchart", fileType: "Visualization", downloadCount: "38"},
+//     {userImage: null, username: "@user5", categoryTitle: "kNN Algorithm", fileType: "Data manipulation", downloadCount: "12"},
+//     {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
+// ];
 
 export default function BrowseCustomPiecesPage() {
-    const [chipOptions1, setChipOptions1] = React.useState(() => [
-        {value: 1, label: 'User ascending'}, {value: 2, label: 'Date descending'},
-        {value: 3, label: 'Popularity Descending',}
-    ]);
-    const [selectedChipOptions1, setSelectedChipOptions1] = React.useState([]);
+    const [sortOption, setSortOption] = useState("");
+
     const [searchBarValue2, setSearchBarValue2] = React.useState("");
+
     const [chipOptions, setChipOptions] = React.useState(() => [
-        {value: 1, label: `CSV`}, {value: 2, label: `Data manipulation`}, {value: 3, label: 'Visualization'},
+        {value: 1, type: `data`, label: 'CSV'}, {value: 2, type: `manipulation`, label: 'Data Manipulation'}, {value: 3, type: `visualization`, label: 'Visualization'},
 
     ]);
     const [selectedChipOptions, setSelectedChipOptions] = React.useState([]);
 
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         // Fetch the data from the API
-        axios.get('http://10.5.37.125:8000/files')  // Using relative path assuming proxy is set up correctly in package.json
+        axios.get('http://129.132.15.76:8008/files')  // Using relative path assuming proxy is set up correctly in package.json
             .then(response => {
-                setData(response.data);
+
+                setData(response.data.filter(d => d.ispublic === 1));
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []);
+
+    useEffect(() => {
+        let filtered = data;
+        if (selectedChipOptions.length > 0) {
+            const selectedFileTypes= chipOptions.filter(option => selectedChipOptions.includes(option.value)).map((option) => option.type);
+            filtered = data.filter(d => selectedFileTypes.includes(d.type));
+        }
+
+        // Apply sorting to the filtered data
+        if (sortOption) {
+            filtered = [...filtered].sort((a, b) => {
+                console.log(a.downloadCount);
+                if (sortOption === "user_id") {
+                    return a.user_id - b.user_id;
+                } else if (sortOption === "title") {
+                    return a.title.localeCompare(b.title);
+                } else if (sortOption === "downloadCount") {
+                    return b.download_count - a.download_count;
+                }
+                return 0;
+            });
+        }
+
+        setFilteredData(filtered);
+
+    }, [selectedChipOptions, data, chipOptions, sortOption]);
+
+
 
     return (
         <>
@@ -79,7 +105,7 @@ export default function BrowseCustomPiecesPage() {
                             borderRadius="8px"
                         >
                             <Flex gap="12px" flexDirection="column" alignItems="start">
-                                <Text>Categories</Text>
+                                <Text>Category Filter</Text>
                                 <ChipView
                                     options={chipOptions} setOptions={setChipOptions} values={selectedChipOptions}
                                     setValues={setSelectedChipOptions}
@@ -87,7 +113,7 @@ export default function BrowseCustomPiecesPage() {
                                     display="flex" flexWrap="wrap"
                                     gap="8px"
                                 >
-
+                                    {/* filtering */}
                                     {(option) => (
                                         <React.Fragment key={option.index}>
                                             {option.isSelected ? (
@@ -95,62 +121,44 @@ export default function BrowseCustomPiecesPage() {
                                                     onClick={option.toggle}
                                                     color="gray.900" fontSize="16px"
                                                     gap="8px"
-                                                    display="flex" bg="gray.100"
-                                                    flexDirection="row" justifyContent="center" alignItems="center"
+                                                    display="flex" bg="gray.300"
+                                                    flexDirection="row" justifyContent="flex-start" alignItems="center"
                                                     textAlign="center" cursor="pointer"
                                                     h="32px"
-                                                    minW="72px"
+                                                    minW="20px"
                                                     px="6px"
                                                     borderRadius="8px"
                                                 >
                                                     <span> {option.label}</ span>
-                                                    <Image src="images/img_arrowright.svg" alt="Arrow Right" w="16px"
-                                                           h="16px"/>
+
                                                 </Box>
                                             ) : (
                                                 <Box
-                                                    onClick={option.toggle} color="gray,900" fontSize="16px"
+                                                    onClick={option.toggle} color="gray.900" fontSize="16px"
                                                     gap="8px"
                                                     display="flex" bg="gray. 100"
-                                                    flexDirection="row" justifyContent="center" alignItems="center"
-                                                    textAlign="center"
-                                                    cursor="pointer"
+                                                    flexDirection="row" justifyContent="flex-start" alignItems="center"
+                                                    textAlign="center" cursor="pointer"
                                                     h="32px"
-                                                    minW="72px"
+                                                    minW="20px"
                                                     px="6px"
                                                     borderRadius="8px">
                                                     <span>{option.label}</span>
-                                                    <Image src="images/img_arrowright.svg" alt="Arrow Right" w="16px"
-                                                           h="16px"/>
                                                 </Box>
                                             )}
                                         </React.Fragment>
                                     )}
                                 </ChipView></Flex>
-                            <Flex gap="12px" flexDirection="column">
-                                <Flex justifyContent="space-between" alignItems="center" gap="20рх">
-                                    <Text>Date created</Text>
-                                    < Flex>
-                                        <Text
-                                            size="textxs">2024-2025</Text>
-                                    </Flex>
-
-                                </Flex>
-                                <RangeSlider defaultValue={[0, 20]} h="8px" display="flex">
-                                    < RangeSliderTrack>
-                                        <RangeSliderFilledTrack/>
-                                    </RangeSliderTrack>
-                                    < RangeSliderThumb index={1}/>
-                                </RangeSlider>
-                            </Flex>
                         </Flex>
 
                         <Flex gap="48px" alignSelf={{md: "center", base: "stretch"}} flex={1} flexDirection="column">
-                            <Flex justifyContent="center" alignItems="center" flexDirection={{
+                            <Flex justifyContent="space-between" alignItems="stretch" flexDirection={{
                                 md: "row"
                                 , base:
                                     "column"
-                            }}>
+                            }}
+                            gap="8px"
+                            m="20px">
                                 <InputGroup w={{md: "36%", base: "100%"}}>
                                     <Input
                                         placeholder={'Search'} value={searchBarValue2}
@@ -166,59 +174,30 @@ export default function BrowseCustomPiecesPage() {
                                         )}
                                     </InputRightElement>
                                 </InputGroup>
-                                <ChipView
-                                    options={chipOptions1} setOptions={setChipOptions1}
-                                    values={selectedChipOptions1}
-                                    setValues={setSelectedChipOptions1}
-                                    w="56%"
-                                    display="flex" flexWrap="wrap"
-                                    gap="8px"
-                                >
-                                    {(option) => (
-                                        <React.Fragment key={option.index}>
-                                            {option.isSelected ? (
-                                                <Box
-                                                    onClick={option.toggle} color="gray, 600" fontSize="16px"
-                                                    bg="gray.100"
-                                                    display="flex" flexDirection="row" justifyContent="center"
-                                                    alignItems="center" textAlign="center" cursor="pointer"
-                                                    h="32px"
-                                                    minW="134px"
-                                                    px="8px"
-                                                    borderRadius="8px"
-                                                >
-                                                    < span>{option.label}</span>
-                                                </Box>
-                                            ) : (
-                                                <Box
-                                                    onClick={option.toggle}
-                                                    color="gray.600"
-                                                    fontSize="16px"
-                                                    bg="gray. 100" display="flex" flexDirection="row"
-                                                    justifyContent="center" alignItems="center" textAlign="center"
-                                                    cursor="pointer"
-                                                    h="32px"
-                                                    minW="134px"
-                                                    px="8px"
-                                                    borderRadius="8px"
-                                                > <span>{option.label}</span>
+                                <Flex justifyContent="center" alignItems="center" flexDirection={{ md: "row", base: "column" }}>
+                                    <Select
+                                        placeholder="Sort by"
+                                        w={{ md: "200px", base: "100%" }}
+                                        value={sortOption}
+                                        onChange={(e) => setSortOption(e.target.value)}
+                                    >
+                                        <option value="user_id">Username</option>
+                                        <option value="title">Title</option>
+                                        <option value="downloadCount">Download Count</option>
+                                    </Select>
+                                </Flex>
 
-                                                </Box>
-
-                                            )}
-                                        </React.Fragment>
-                                    )}
-                                </ChipView>
                             </Flex>
                             <SimpleGrid m1={{
                                 md:
                                     "62px", base: "Opx"
-                            }} gap="24px" columns={{md: 3, base: 1, sm: 2}}>
+                            }} gap="24px" columns={{md: 3, base: 1, sm: 2}}
+                                        ml="20px" mr="20px">
                                 <Suspense fallback={<div>Loading feed...</div>}>
-                                    {data.map((d, index) => (
+                                    {filteredData.map((d, index) => (
 
                                         <Link
-                                            href={`/piece?username=${encodeURIComponent("@user"+d.user_id)}&categoryTitle=${encodeURIComponent(d.title)}&fileType=${encodeURIComponent(d.type)}&downloadCount=${encodeURIComponent(d.downloadCount)}&description=${encodeURIComponent(d.description)}`}
+                                            href={`/piece?username=${encodeURIComponent("@user"+d.user_id)}&categoryTitle=${encodeURIComponent(d.title)}&fileType=${encodeURIComponent(d.type)}&downloadCount=${encodeURIComponent(d.download_count)}&description=${encodeURIComponent(d.description)}&filename=${encodeURIComponent(d.filename)}&fileId=${encodeURIComponent(d.id)}`}
                                               key={"cardgrid" + index} >
                                             <UserProfile2 {...d} key={"griduserfour" + index}/>
                                         </Link>
