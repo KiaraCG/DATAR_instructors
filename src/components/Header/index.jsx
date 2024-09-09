@@ -1,13 +1,15 @@
 import { Text, Link, UnorderedList, ListItem, Container, Flex } from "@chakra-ui/react";
-import React, {useContext} from "react";
-import {AuthContext} from "../../AuthContext";
+import React from "react";
+import {useNavigate} from 'react-router-dom';
 
 
 export default function Header({page=3,...props}) {
 
-    const context = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const handleLogout = () => {
-        context.logout();
+        localStorage.removeItem('user')
+        navigate('/');
     }
 
     const getBackgroundColors = () => {

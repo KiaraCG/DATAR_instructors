@@ -5,10 +5,10 @@ import Header from "../../components/Header";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 
-// TODO: fetch dynamically
-let user_id = 1;
 
 export default function NewClassroom() {
+    const user_id = localStorage.getItem('user');
+
     const [classname, setClassname] = useState('');
 
     const navigate = useNavigate();

@@ -11,10 +11,9 @@ const dropDownOptions = [
     { label: "Python Script for Data Manipulation", value: "manipulation" }
 ];
 
-// TODO: get id from login
-const id = 2;
-
 export default function NewPieceSection() {
+
+    const id = localStorage.getItem('user');
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');

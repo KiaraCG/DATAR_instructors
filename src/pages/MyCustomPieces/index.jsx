@@ -30,6 +30,7 @@ export default function MyCustomPiecesPage(props) {
     const { user } = props;
     const navigate = useNavigate();
 
+    
     useEffect(() => {
         console.log('User:', user); // Check user state in PrivateRoute
         if (!user) {

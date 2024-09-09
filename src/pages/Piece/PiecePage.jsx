@@ -7,11 +7,10 @@ import ReadOnlyCSV from "./ReadOnlyCSV";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-// should be gotten dynamically
-let user_id = 1;
-
 
 export default function PiecePage() {
+    const user_id = localStorage.getItem('user');
+    
     const location = useLocation();
     const params = new URLSearchParams(location.search);
 

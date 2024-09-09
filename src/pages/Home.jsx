@@ -5,10 +5,8 @@ import Footer from "../components/Footer";
 import AboutSection from "./AboutSection";
 import HomeSection from "./HomeSection";
 import { Image, Flex } from "@chakra-ui/react";
-
 import HomeButton from "components/HomeButton";
 
-// todo: create referenced (linked) pages
 
 const Home = () => {
     return (

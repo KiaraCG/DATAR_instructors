@@ -5,12 +5,13 @@ import {ChakraProvider} from "@chakra-ui/react";
 import theme from "./theme";
 
 function App() {
-    const [user, setUser] = useState('');
+    // const [user, setUser] = useState('');
 
     return (
         <ChakraProvider theme={theme}>
             <Router>
-                <Routes user={user} setUser={setUser} />
+                <Routes/>
+                {/* <Routes user={user} setUser={setUser} /> */}
             </Router>
         </ChakraProvider>
     );

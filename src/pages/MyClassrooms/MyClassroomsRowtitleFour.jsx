@@ -18,15 +18,17 @@ import axios from "axios";
 import jsPDF from "jspdf";
 
 
-let user_id = 4;
 
 export default function MyclassroomsRowtitleFour() {
 
+    const user_id = localStorage.getItem('user');
+    
     const [data, setData] = useState([]);
     const [ids, setIds] = useState([]);
     const [classFiles, setClassFiles] = useState([]);
 
     const myfunc = (()=>{
+        console.log(user_id);
         axios.get(`http://129.132.15.76:8008/classrooms/lecturer/${user_id}`)
             .then(response => {
                 setIds(response.data.map(d => ({id: d.id, name: d.name})));

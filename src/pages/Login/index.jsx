@@ -1,20 +1,16 @@
 import { Helmet } from "react-helmet";
 import LoginRowcommentlogin from "./LoginRowcommentlogin";
 import { Button, Text, Flex, Container, Box, Link } from "@chakra-ui/react";
-import React, {useContext} from "react";
+import React from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {AuthContext} from "../../AuthContext";
 
-export default function LoginPage(props) {
+export default function LoginPage() {
 
     const navigate = useNavigate();
-    // const { login } = useContext(AuthContext);
-    const { user, setUser } = props;
 
     const handleLogin = async (username, password) => {
         try {
-            // const response = await axios.post('/api/login', { username, password }); // Replace with your login API endpoint
             const response = await axios.get(`http://129.132.15.76:8008/user/info/${username}`);
             const userData = response.data;
 
@@ -23,12 +19,8 @@ export default function LoginPage(props) {
                 throw new Error();
             }
 
-            // Save the user data using context or localStorage
-            // login(userData);
-            setUser(username);
-
-            // Redirect to the home page or a protected page
-            navigate('/mycustompieces');
+            localStorage.setItem('user', userData.id); // set user in local storage
+            navigate('/mycustompieces'); // go to my custom pieces
         } catch (error) {
             console.error("Login failed:", error);
             alert("Login failed. Please check your username and password.");

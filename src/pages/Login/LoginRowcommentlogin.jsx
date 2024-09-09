@@ -65,11 +65,11 @@ export default function LoginRowcommentlogin({onLogin}) {
                                     borderStyle="solid" alignSelf="stretch"
                                     onClick={handleLogin}>
                                 Sign In </Button>
-                        <Link href="#">
+                        {/* <Link href="#">
                             <Text textDecoration="underline" mb="86px">
                                 Forgot password?
                             </Text>
-                        </Link>
+                        </Link> */}
                     </Flex>
                 </Container>
             </Flex>
