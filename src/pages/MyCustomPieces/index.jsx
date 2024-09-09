@@ -13,6 +13,7 @@ import {
 import React, {Suspense, useContext, useEffect, useState} from "react";
 import axios from "axios";
 import { AuthContext } from '../../AuthContext';
+import { useNavigate } from 'react-router-dom'
 
 // TODO: get id from LOGIN
 const id = 2;
@@ -25,11 +26,15 @@ const id = 2;
 //     {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
 // ];
 
-export default function MyCustomPiecesPage() {
-    const { user } = useContext(AuthContext);
+export default function MyCustomPiecesPage(props) {
+    const { user } = props;
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log('User:', user); // Check user state in PrivateRoute
+        if (!user) {
+            // navigate('/login');
+        }
     }, [user]);
 
     const [searchBarValue1, setSearchBarValue1] = React.useState("");

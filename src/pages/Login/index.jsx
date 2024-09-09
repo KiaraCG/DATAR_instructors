@@ -6,10 +6,11 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../../AuthContext";
 
-export default function LoginPage() {
+export default function LoginPage(props) {
 
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
+    // const { login } = useContext(AuthContext);
+    const { user, setUser } = props;
 
     const handleLogin = async (username, password) => {
         try {
@@ -23,7 +24,8 @@ export default function LoginPage() {
             }
 
             // Save the user data using context or localStorage
-            login(userData);
+            // login(userData);
+            setUser(username);
 
             // Redirect to the home page or a protected page
             navigate('/mycustompieces');

@@ -9,46 +9,75 @@ import {
     Flex,
     Box,
     SimpleGrid,
-    Button, Link,
+    Button, 
+    Link,
 } from "@chakra-ui/react";
 import UserProfile1 from "../../components/UserProfile1";
 import React, {Suspense, useEffect, useState} from "react";
 import axios from "axios";
+import jsPDF from "jspdf";
 
-let user_id = 1;
+
+let user_id = 4;
 
 export default function MyclassroomsRowtitleFour() {
+
     const [data, setData] = useState([]);
-    const [classids, setClassids] = useState([]);
+    const [ids, setIds] = useState([]);
     const [classFiles, setClassFiles] = useState([]);
 
+    const myfunc = (()=>{
+        axios.get(`http://129.132.15.76:8008/classrooms/lecturer/${user_id}`)
+            .then(response => {
+                setIds(response.data.map(d => ({id: d.id, name: d.name})));
+
+                const newClassFiles = ids.map(i => ({
+                    id: i.id,
+                    files: data.filter(d => d.classroom_ids.includes(i.id)),
+                    name: i.name,
+                    idisequal: i.id==1
+                }));
+                setClassFiles(newClassFiles);
+                console.log(newClassFiles);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    })
     useEffect(() => {
         axios.get(`http://129.132.15.76:8008/files/`)
             .then(response => {
                 setData(response.data);
+                myfunc();
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-    }, []);
+    }, [user_id]);
 
-    useEffect(() => {
-        axios.get(`http://129.132.15.76:8008/classrooms/lecturer/${user_id}`)
-            .then(response => {
-                setClassids(response.data.map(d => d.id));
-                const newClassFiles = classids.map(classid => ({
-                    classid,
-                    files: data.filter(d => d.classroom_ids.includes(classid)),
-                }));
-                setClassFiles(newClassFiles);
-                console.log(newClassFiles);
+    const generatePDF = (labels) => {
+    const doc = new jsPDF();
+    const qrCodesPerRow = 3; // Adjust the number of QR codes per row for layout purposes
+    const qrCodeWidth = 50; // Width for each QR code image in the PDF
+    const qrCodeHeight = 50; // Height for each QR code image in the PDF
 
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, [user_id, data]);
+    const numberOfQRCodes = labels.length;
 
+    for (let i = 1; i <= numberOfQRCodes; i++) {
+            const img = `/qr_codes/qr${i}.png`; // Assuming QR codes are stored in /public/qr_codes
+            const x = ((i - 1) % qrCodesPerRow) * (qrCodeWidth + 10); // X position based on row layout
+            const y = Math.floor((i - 1) / qrCodesPerRow) * (qrCodeHeight + 20); // Y position for each row
+
+            // Add QR code image to PDF
+            doc.addImage(img, "PNG", x, y + 10, qrCodeWidth, qrCodeHeight);
+
+            // Add label below the QR code
+            doc.text(labels[i-1], x + 15, y + qrCodeHeight + 20);
+        }
+
+        // Save and download the PDF
+        doc.save("qr_codes.pdf");
+    };
 
     return (
         <Box mb="4px">
@@ -78,8 +107,8 @@ export default function MyclassroomsRowtitleFour() {
                            p={{md: "20px", base: "20px"}}>
                     <Accordion gap="16px" display="flex" flexDirection="column" allowToggle>
 
-                        {classids.map((id) => (
-                            <AccordionItem key={id}>
+                        {classFiles.map((f) => (
+                            <AccordionItem key={f.id}>
                                 {(props) => (
                                     <>
                                         <AccordionButton
@@ -91,7 +120,7 @@ export default function MyclassroomsRowtitleFour() {
                                             p="16px"
                                             borderRadius="8px">
                                             <Heading
-                                                as="h3" size="headingxs">Classroom ID: {id}</Heading>
+                                                as="h3" size="headingxs">{f.name}, ID={f.id}</Heading>
                                             <Image src="images/img_arrow_down.svg" alt="Arrowdown" h="20px" w="20px"/>
                                         </AccordionButton>
                                         <AccordionPanel>
@@ -101,7 +130,7 @@ export default function MyclassroomsRowtitleFour() {
                                                 sm: 2
                                             }}>
                                                 <Suspense fallback={<div>Loading feed...</div>}>
-                                                    {classFiles && classFiles.find(f => f.classid === id)?.files?.map((d, index) => (
+                                                    {f.files && f.files?.map((d, index) => (
                                                         <Link
                                                             href={`/piece?username=${encodeURIComponent("@user"+d.user_id)}&categoryTitle=${encodeURIComponent(d.title)}&fileType=${encodeURIComponent(d.type)}&downloadCount=${encodeURIComponent(d.download_count)}&description=${encodeURIComponent(d.description)}&filename=${encodeURIComponent(d.filename)}`}
                                                             key={"cardgrid" + index} _hover={{color:"white"}}>
@@ -110,13 +139,14 @@ export default function MyclassroomsRowtitleFour() {
                                                     ))}
                                                 </Suspense>
                                                 <Button rightIcon={<Image
-                                                    src="images/printer.png" alt="Plus" boxSize="16px"/>} gap="2px"
-                                                        minW="156px" color="gray.100" maxW="1600px">
-                                                    Print QR Codes
+                                                    src="images/download.svg" alt="Plus" boxSize="16px"
+                                                    />} gap="2px"
+                                                        minW="156px" color="gray.100" maxW="1600px"
+                                                        onClick={() => generatePDF(f.files?.map(d => d.title))}
+                                                        >
+                                                    Download QR Codes
                                                 </Button>
-
                                             </ SimpleGrid>
-
                                         </AccordionPanel>
                                     </>
                                 )}

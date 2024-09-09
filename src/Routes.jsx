@@ -13,15 +13,17 @@ import Piece from "./pages/Piece";
 import PrivateRoute from './PrivateRoute';
 import { AuthProvider } from './AuthContext';
 
-const ProjectRoutes = () => {
+const ProjectRoutes = (props) => {
+    const { user, setUser } = props;
+
     let element = useRoutes([
         { path: "/", element: <Home /> },
         { path: "*", element: <NotFound /> },
-        { path: "/mycustompieces", element: <PrivateRoute children={ <MyCustomPieces />} /> },
+        { path: "/mycustompieces", element: <PrivateRoute children={ <MyCustomPieces user={user} />} /> },
         { path: "/myclassrooms", element: <PrivateRoute><MyClassroomsPage /></PrivateRoute> },
         { path: "/browsecustompieces", element:  <BrowseCustomPiecesPage/> },
         { path: "/newpiece", element: <PrivateRoute><AddNewPiece /></PrivateRoute> },
-        { path: "/login", element: <LoginPage /> },
+        { path: "/login", element: <LoginPage user={user} setUser={setUser} /> },
         { path: "/newclassroom", element: <PrivateRoute><NewClassroom /></PrivateRoute> },
         { path: "/piece", element: <PrivateRoute><Piece /></PrivateRoute> },
     ]);
@@ -31,20 +33,4 @@ const ProjectRoutes = () => {
 }
 
 export default ProjectRoutes;
-
-
-// const ProjectRoutes = () => {
-//     let element = useRoutes([
-//         {path: "/", element: <Home />},
-//         {path: "*", element: <NotFound />},
-//         {path:"/mycustompieces", element: <MyCustomPieces />},
-//         {path:"/myclassrooms", element: <MyClassroomsPage />},
-//         {path:"/browsecustompieces", element: <BrowseCustomPiecesPage />},
-//         {path:"/newpiece", element: <AddNewPiece />},
-//         {path:"/login", element: <LoginPage />},
-//         {path:"/newclassroom", element: <NewClassroom />},
-//         {path:"/piece", element: <Piece />},
-//     ]);
-//     return element;
-// }
 

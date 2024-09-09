@@ -45,7 +45,7 @@ export default function Footer(props) {
             alignSelf={{ md: "start", base: "auto" }}
             color="white"
           >
-            How does it work?
+            {/* How does it work? */}
           </Heading>
           <Flex
             gap="26px"
@@ -54,11 +54,10 @@ export default function Footer(props) {
             alignItems="start"
           >
             <Heading size="headingxs" as="h4" letterSpacing="-0.48px" color="white">
-              Our Publications
+              {/* Our Publications */}
             </Heading>
             <Heading as="h1" letterSpacing="-0.9px" lineHeight="120%" fontSize="16px" color="white" fontWeight={300}>
               <>
-                Custom text
                 {/*VL-HCC Demonstration*/}
                 <br />
                 {/*CHI Paper*/}
@@ -73,11 +72,10 @@ export default function Footer(props) {
             ml={{ md: "-20px", base: "0" }} // Added margin-left for adjustment
           >
             <Heading size="headingxs" as="h4" letterSpacing="-0.48px" color="white">
-              The Team
+              {/* The Team */}
             </Heading>
             <Heading as="h1" letterSpacing="-0.9px" lineHeight="120%" fontSize="16px" color="white" fontWeight={300}>
               <>
-                Custom text
                 {/*Lilian Lopez: llopez@ethz.ch*/}
                 <br />
                 {/*Kiara Chau: kchaugarcia@ethz.ch*/}
