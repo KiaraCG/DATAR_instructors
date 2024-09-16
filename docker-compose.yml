@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: ghcr.io/kiaracg/data_instructors/web:latest
+    container_name: data_instructors_web
+    ports:
+      - "3005:3000"  # 将前端服务暴露在3003端口
+    environment:
+      - NODE_ENV=production  # 设置前端环境变量
+    restart: always
+
+volumes:
+  peachlab_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /var/lib/peachlab/data/datar_instructor/data
+
+  peachlab_backup:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /var/lib/peachlab/backup/datar_instructor/backup
+
+  docker_volumes:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /var/lib/docker
