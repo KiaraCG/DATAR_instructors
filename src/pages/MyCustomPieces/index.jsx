@@ -15,8 +15,7 @@ import axios from "axios";
 import { AuthContext } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom'
 
-// TODO: get id from LOGIN
-const id = 2;
+
 // const data = [
 //     {userImage: null, username: "@user"+{id}, categoryTitle: "Supermarkets", fileType: "CSV", downloadCount: "162",},
 //     {userImage: null, username: "@user3", categoryTitle: "Soccer players", fileType: "CSV", downloadCount: "161"},
@@ -26,17 +25,9 @@ const id = 2;
 //     {userImage: null, username: "@user4", categoryTitle: "K Means Algorithm", fileType: "Data manipulation", downloadCount: "7",}
 // ];
 
-export default function MyCustomPiecesPage(props) {
-    const { user } = props;
-    const navigate = useNavigate();
+export default function MyCustomPiecesPage() {
 
-    
-    useEffect(() => {
-        console.log('User:', user); // Check user state in PrivateRoute
-        if (!user) {
-            // navigate('/login');
-        }
-    }, [user]);
+    const id = localStorage.getItem('user');
 
     const [searchBarValue1, setSearchBarValue1] = React.useState("");
     const [chipOptions, setChipOptions] = React.useState(() => [
@@ -53,7 +44,7 @@ export default function MyCustomPiecesPage(props) {
 
     useEffect(() => {
         // Fetch the data from the API
-        axios.get('http://129.132.15.76:8008/files/?user_id=' + id)  // Using relative path assuming proxy is set up correctly in package.json
+        axios.get('http://129.132.15.76:8008/files/?user_id=' + id)
             .then(response => {
                 setData(response.data);
             })
