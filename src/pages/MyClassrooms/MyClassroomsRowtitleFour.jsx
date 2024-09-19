@@ -27,7 +27,7 @@ export default function MyclassroomsRowtitleFour() {
     const [ids, setIds] = useState([]);
     const [classFiles, setClassFiles] = useState([]);
 
-    const myfunc = (()=>{
+    useEffect(()=>{
         console.log(user_id);
         axios.get(`http://129.132.15.76:8008/classrooms/lecturer/${user_id}`)
             .then(response => {
@@ -45,12 +45,11 @@ export default function MyclassroomsRowtitleFour() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-    })
+    }, [data])
     useEffect(() => {
         axios.get(`http://129.132.15.76:8008/files/`)
             .then(response => {
                 setData(response.data);
-                myfunc();
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
